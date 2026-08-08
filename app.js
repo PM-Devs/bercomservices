@@ -69,6 +69,14 @@ app.use(async (req, res, next) => {
     }
 });
 
+// Content is DB-driven and admin-editable, so dynamic HTML must never be
+// cached at Vercel's edge (unlike express.static assets under /css /js /img,
+// which set their own sensible cache headers and aren't affected by this).
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    next();
+});
+
 // Make session user + flash messages available to every view.
 app.use((req, res, next) => {
     res.locals.currentAdminEmail = req.session.userEmail || null;
