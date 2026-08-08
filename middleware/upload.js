@@ -1,8 +1,19 @@
 const multer = require('multer');
 const path = require('path');
+const os = require('os');
 const crypto = require('crypto');
 
-const UPLOAD_DIR = path.join(__dirname, '..', 'uploads');
+// Vercel's deployed filesystem is read-only except /tmp, and /tmp itself is
+// wiped between invocations — uploads saved there won't persist. Locally
+// this stays the real uploads/ folder, served statically and kept in git.
+const UPLOAD_DIR = process.env.VERCEL
+    ? path.join(os.tmpdir(), 'uploads')
+    : path.join(__dirname, '..', 'uploads');
+
+if (process.env.VERCEL) {
+    const fs = require('fs');
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+}
 
 const ALLOWED_MIME = new Set([
     'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'
@@ -31,3 +42,4 @@ const upload = multer({
 });
 
 module.exports = upload;
+module.exports.UPLOAD_DIR = UPLOAD_DIR;
