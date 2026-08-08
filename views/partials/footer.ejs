@@ -1,0 +1,74 @@
+<!-- Footer -->
+<footer class="bc-footer">
+    <div class="container">
+        <div class="row g-5 mb-4">
+            <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <div class="bc-brand-icon"><i class="fas fa-globe-africa"></i></div>
+                    <span class="fw-bold fs-5 text-white"><%= settings.companyName %> <%= settings.companySub %></span>
+                </div>
+                <p class="bc-footer-text mb-3"><%= settings.footer.blurb %></p>
+                <div class="d-flex gap-2">
+                    <a href="<%= settings.socialLinks.linkedin || '#' %>" class="bc-footer-social" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                    <a href="<%= settings.socialLinks.facebook || '#' %>" class="bc-footer-social" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                    <a href="<%= settings.socialLinks.twitter || '#' %>" class="bc-footer-social" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-lg-2">
+                <h6 class="fw-bold text-white mb-3">Quick Links</h6>
+                <ul class="list-unstyled bc-footer-links">
+                    <% settings.footer.quickLinks.forEach(function (link) { %>
+                        <li><a href="<%= link.href %>"><%= link.label %></a></li>
+                    <% }); %>
+                </ul>
+            </div>
+            <div class="col-6 col-lg-3">
+                <h6 class="fw-bold text-white mb-3">Our Services</h6>
+                <ul class="list-unstyled bc-footer-links">
+                    <% services.forEach(function (svc) { %>
+                        <li><a href="<%= anchorHref(currentSlug, 'services', svc.slug) %>"><%= svc.title %></a></li>
+                    <% }); %>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <h6 class="fw-bold text-white mb-3">Contact Info</h6>
+                <ul class="list-unstyled bc-footer-links">
+                    <li><i class="fas fa-map-marker-alt text-primary me-2"></i><%= settings.address %></li>
+                    <li><a href="mailto:<%= settings.email %>"><i class="fas fa-envelope text-primary me-2"></i><%= settings.email %></a></li>
+                    <li><a href="tel:<%= settings.phone.replace(/\s+/g, '') %>"><i class="fas fa-phone text-primary me-2"></i><%= settings.phone %></a></li>
+                    <li><a href="http://<%= settings.website.replace(/^https?:\/\//, '') %>" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe text-primary me-2"></i><%= settings.website %></a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="bc-footer-hr">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="small bc-footer-text mb-0"><%= settings.footer.copyrightText %></p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <p class="small bc-footer-text mb-0"><%- settings.footer.developerCredit %></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to Top -->
+<a href="#" class="bc-back-to-top" id="backToTop" aria-label="Back to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+
+<!-- Global lightbox target for any .bc-gallery-item on the page -->
+<div id="bc-lightbox">
+    <div class="bc-lightbox-close" id="bcLightboxClose" aria-label="Close"><i class="material-icons-round">close</i></div>
+    <img src="" alt="" id="bcLightboxImg">
+    <div class="bc-lightbox-caption" id="bcLightboxCaption"></div>
+</div>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/lib/wow/wow.min.js"></script>
+<script src="/lib/easing/easing.min.js"></script>
+<script src="/lib/waypoints/waypoints.min.js"></script>
+<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/motion.js?v=8"></script>

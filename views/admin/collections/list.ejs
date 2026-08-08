@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <p class="text-secondary mb-0"><%= items.length %> item<%= items.length === 1 ? '' : 's' %></p>
+    <a href="/admin/collections/<%= type %>/new" class="btn bc-btn-primary btn-sm">
+        <i class="material-icons-round align-middle" style="font-size:1rem;">add</i> New <%= config.label %>
+    </a>
+</div>
+
+<div class="admin-card p-0">
+    <table class="table admin-table mb-0">
+        <thead>
+            <tr>
+                <th><%= config.label %></th>
+                <th>Order</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (!items.length) { %>
+                <tr><td colspan="4" class="text-center text-secondary py-4">No <%= config.labelPlural.toLowerCase() %> yet.</td></tr>
+            <% } %>
+            <% items.forEach(function (item) { %>
+                <tr>
+                    <td><%= item[config.titleField] %></td>
+                    <td><%= item.order %></td>
+                    <td>
+                        <% if (item.active) { %>
+                            <span class="badge badge-status-approved">Active</span>
+                        <% } else { %>
+                            <span class="badge badge-status-rejected">Inactive</span>
+                        <% } %>
+                    </td>
+                    <td class="text-end">
+                        <a href="/admin/collections/<%= type %>/<%= item._id %>/edit" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <form action="/admin/collections/<%= type %>/<%= item._id %>?_method=DELETE" method="POST" class="d-inline" data-confirm="Delete this <%= config.label.toLowerCase() %>?">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>

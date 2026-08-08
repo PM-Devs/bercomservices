@@ -1,0 +1,88 @@
+<div class="admin-card mb-3">
+    <form method="POST" action="/admin/pages/<%= page._id %>?_method=PUT">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label small fw-medium">Title</label>
+                <input type="text" name="title" class="form-control" value="<%= page.title %>">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label small fw-medium">Slug</label>
+                <input type="text" class="form-control" value="<%= page.slug %>" disabled>
+            </div>
+            <div class="col-12">
+                <label class="form-label small fw-medium">Meta Description</label>
+                <textarea name="metaDescription" class="form-control" rows="2"><%= page.metaDescription %></textarea>
+            </div>
+            <div class="col-12">
+                <label class="form-label small fw-medium">Meta Keywords</label>
+                <input type="text" name="metaKeywords" class="form-control" value="<%= page.metaKeywords %>">
+            </div>
+            <% if (page.slug !== 'home') { %>
+            <div class="col-md-6">
+                <label class="form-label small fw-medium">Page Hero Label</label>
+                <input type="text" name="pageHeroLabel" class="form-control" value="<%= page.pageHero.label %>">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label small fw-medium">Page Hero Title</label>
+                <input type="text" name="pageHeroTitle" class="form-control" value="<%= page.pageHero.title %>">
+            </div>
+            <div class="col-12">
+                <label class="form-label small fw-medium">Page Hero Image</label>
+                <div class="input-group">
+                    <input type="text" name="pageHeroBackgroundImage" class="form-control" value="<%= page.pageHero.backgroundImage || '' %>" placeholder="/uploads/filename.jpg">
+                    <a href="/admin/media" target="_blank" class="btn btn-outline-secondary">Browse Library</a>
+                </div>
+                <div class="form-text">Leave empty to use the global page hero image from Site Settings.</div>
+            </div>
+            <% } %>
+            <div class="col-12">
+                <div class="form-check">
+                    <input type="checkbox" name="published" class="form-check-input" id="published" <%= page.published ? 'checked' : '' %>>
+                    <label class="form-check-label small" for="published">Published (visible on the live site)</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn bc-btn-primary btn-sm mt-3">Save Page Details</button>
+    </form>
+</div>
+
+<div class="admin-card">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0">Sections</h6>
+        <form method="POST" action="/admin/pages/<%= page._id %>/sections" class="d-flex gap-2">
+            <select name="kind" class="form-select form-select-sm" required>
+                <% sectionKinds.forEach(function (kind) { %><option value="<%= kind %>"><%= kind %></option><% }); %>
+            </select>
+            <input type="text" name="anchorId" class="form-control form-control-sm" placeholder="anchor id (optional)">
+            <button type="submit" class="btn btn-sm bc-btn-primary text-nowrap">Add Section</button>
+        </form>
+    </div>
+
+    <% if (!page.sections.length) { %>
+        <p class="text-secondary text-center py-4">No sections yet — add one above.</p>
+    <% } %>
+
+    <% page.sections.forEach(function (section, i) { %>
+        <div class="d-flex justify-content-between align-items-center border rounded p-3 mb-2" style="border-color:var(--bc-border) !important;">
+            <div>
+                <span class="fw-medium"><%= section.kind %></span>
+                <% if (section.anchorId) { %><code class="ms-2 small">#<%= section.anchorId %></code><% } %>
+                <% if (section.visible === false) { %><span class="badge badge-status-rejected ms-2">Hidden</span><% } %>
+            </div>
+            <div class="d-flex gap-1">
+                <form method="POST" action="/admin/pages/<%= page._id %>/sections/<%= section._id %>/move">
+                    <input type="hidden" name="direction" value="up">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary" <%= i === 0 ? 'disabled' : '' %>><i class="material-icons-round" style="font-size:1rem;">arrow_upward</i></button>
+                </form>
+                <form method="POST" action="/admin/pages/<%= page._id %>/sections/<%= section._id %>/move">
+                    <input type="hidden" name="direction" value="down">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary" <%= i === page.sections.length - 1 ? 'disabled' : '' %>><i class="material-icons-round" style="font-size:1rem;">arrow_downward</i></button>
+                </form>
+                <a href="/admin/pages/<%= page._id %>/sections/<%= section._id %>/edit" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <form action="/admin/pages/<%= page._id %>/sections/<%= section._id %>?_method=DELETE" method="POST" data-confirm="Remove this section?">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    <% }); %>
+</div>

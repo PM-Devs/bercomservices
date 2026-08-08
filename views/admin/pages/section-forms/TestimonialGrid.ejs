@@ -1,0 +1,22 @@
+<% var d = section.data || {}; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3">
+    <div class="col-md-6"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-3"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+        </select>
+    </div>
+    <div class="col-md-3"><label class="form-label small fw-medium">Display Style</label>
+        <select name="variant" class="form-select">
+            <option value="carousel" <%= (!d.variant || d.variant === 'carousel') ? 'selected' : '' %>>Sliding Carousel</option>
+            <option value="grid" <%= d.variant === 'grid' ? 'selected' : '' %>>Static Grid</option>
+        </select>
+    </div>
+</div>
+<p class="small text-secondary mt-2">Content comes from the Testimonials collection — manage them under <a href="/admin/collections/testimonials">Collections &rarr; Testimonials</a>.</p>
+
+<%- include('_bottom', { page, section }) %>

@@ -1,0 +1,32 @@
+<section class="bc-section <%= data.sectionBg || 'bc-section-white' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <h2 class="bc-section-title"><%= data.title %></h2>
+            <% if (data.intro) { %><p class="text-secondary bc-max-650 mx-auto mb-0"><%= data.intro %></p><% } %>
+        </div>
+        <div class="row g-4">
+            <% teamMembers.forEach(function (member, i) { %>
+                <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="<%= (0.1 + i * 0.1).toFixed(1) %>s">
+                    <div class="bc-team-card h-100">
+                        <div class="bc-team-img-wrap">
+                            <img src="<%= member.photo %>" alt="<%= member.name %>" class="bc-team-img">
+                            <div class="bc-team-overlay">
+                                <% if (member.linkedinHref) { %>
+                                    <a href="<%= member.linkedinHref %>" target="_blank" rel="noopener noreferrer" class="bc-team-social-btn" aria-label="LinkedIn">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="bc-team-info">
+                            <h6 class="fw-bold mb-1"><%= member.name %></h6>
+                            <span class="small text-primary d-block mb-2"><%= member.role %></span>
+                            <p class="small text-secondary mb-0" data-read-more data-lines="4"><%= member.bio %></p>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>

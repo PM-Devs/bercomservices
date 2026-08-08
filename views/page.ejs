@@ -1,0 +1,30 @@
+<% if (page.slug === 'home') { %>
+    <%- include('home') %>
+<% } else { %>
+<div class="bc-page-hero" style="background-image:url('<%= page.pageHero.backgroundImage || settings.pageHeroBackgroundImage %>')">
+    <div class="bc-page-hero-overlay"></div>
+    <div class="bc-page-hero-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 wow fadeInLeft" data-wow-delay="0.1s">
+                    <% if (page.pageHero.label) { %><span class="bc-section-label"><%= page.pageHero.label %></span><% } %>
+                    <h1 class="bc-page-hero-title"><%= page.pageHero.title %></h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bc-breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><%= page.pageHero.title %></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% sections.forEach(function (section) { %>
+    <% try { %>
+        <%- include('sections/' + section.kind, { data: section.data || {}, anchorId: section.anchorId }) %>
+    <% } catch (e) { %>
+        <!-- section render error: <%= section.kind %> -->
+    <% } %>
+<% }); %>
+<% } %>

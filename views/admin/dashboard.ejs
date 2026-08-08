@@ -1,0 +1,50 @@
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="admin-stat-card">
+            <div class="stat-value"><%= counts.pages %></div>
+            <div class="stat-label">Pages</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="admin-stat-card">
+            <div class="stat-value"><%= counts.services %></div>
+            <div class="stat-label">Active Services</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="admin-stat-card">
+            <div class="stat-value"><%= counts.courses %></div>
+            <div class="stat-label">Active Courses</div>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="admin-stat-card">
+            <div class="stat-value"><%= counts.media %></div>
+            <div class="stat-label">Media Files</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <h6 class="fw-bold mb-3">Quick Links</h6>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="/admin/pages" class="btn btn-outline-secondary btn-sm">Manage Pages</a>
+                <a href="/admin/collections/services" class="btn btn-outline-secondary btn-sm">Manage Services</a>
+                <a href="/admin/media" class="btn btn-outline-secondary btn-sm">Media Library</a>
+                <a href="/admin/settings" class="btn btn-outline-secondary btn-sm">Site Settings</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="admin-card" style="border-top:3px solid var(--bc-primary);">
+            <h6 class="fw-bold mb-1">Prospect Research</h6>
+            <p class="small text-secondary">Prospects awaiting your review.</p>
+            <div class="d-flex align-items-center justify-content-between">
+                <span class="fw-bold fs-4 text-primary"><%= counts.pendingProspects %></span>
+                <a href="/admin/research" class="btn bc-btn-primary btn-sm">Review Queue</a>
+            </div>
+        </div>
+    </div>
+</div>

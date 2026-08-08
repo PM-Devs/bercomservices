@@ -1,0 +1,10 @@
+<% var d = section.data || {}; %>
+<%- include('_top', { page, section }) %>
+
+<div class="mb-3">
+    <label class="form-label small fw-medium">HTML Content</label>
+    <textarea name="html" class="form-control" rows="14" style="font-family: monospace;"><%= d.html %></textarea>
+    <span class="small text-secondary">Basic tags only (headings, paragraphs, lists, links, images, bold/italic) — anything else is stripped for safety when you save.</span>
+</div>
+
+<%- include('_bottom', { page, section }) %>

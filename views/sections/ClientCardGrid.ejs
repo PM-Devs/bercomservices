@@ -1,0 +1,43 @@
+<section class="bc-section <%= data.sectionBg || 'bc-section-light' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <h2 class="bc-section-title"><%= data.title %></h2>
+            <% if (data.intro) { %><p class="text-secondary bc-max-650 mx-auto mb-0"><%= data.intro %></p><% } %>
+        </div>
+
+        <% if (data.variant === 'table') { %>
+            <div class="table-responsive bc-table-wrap wow fadeInUp" data-wow-delay="0.1s">
+                <table class="table mb-0">
+                    <thead>
+                        <tr><th>Client</th><th>Engagement Period</th><th>Scope of Work</th></tr>
+                    </thead>
+                    <tbody>
+                        <% clients.forEach(function (c) { %>
+                            <tr>
+                                <td class="fw-medium"><%= c.name %></td>
+                                <td><%= c.engagementPeriod %></td>
+                                <td><span data-read-more data-lines="3"><%= c.scopeOfWork %></span></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <div class="row g-4">
+                <% clients.forEach(function (c, i) { %>
+                    <div class="col-6 col-lg-3 wow fadeInUp" data-wow-delay="<%= (0.1 + i * 0.1).toFixed(1) %>s">
+                        <div class="bc-client-card h-100">
+                            <% if (c.logo) { %><img class="bc-client-logo" src="<%= c.logo %>" alt="<%= c.name %>"><% } else { %><i class="material-icons-round text-primary d-block mb-2"><%= c.icon %></i><% } %>
+                            <h6 class="fw-bold mb-1"><%= c.name %></h6>
+                            <span class="small text-secondary d-block"><%= c.tagline %></span>
+                            <% if (data.variant === 'cardsWithBadge' && c.dateBadge) { %>
+                                <span class="bc-client-badge"><%= c.dateBadge %></span>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+</section>

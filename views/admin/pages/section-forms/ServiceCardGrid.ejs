@@ -1,0 +1,31 @@
+<% var d = section.data || {}; var wc = d.wideCta || {}; var wcBtn = wc.button || {}; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Card Detail Level</label>
+        <select name="variant" class="form-select">
+            <option value="summary" <%= d.variant !== 'full' ? 'selected' : '' %>>Summary (short description)</option>
+            <option value="full" <%= d.variant === 'full' ? 'selected' : '' %>>Full (long description + bullet groups)</option>
+        </select>
+    </div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+    <div class="col-12"><label class="form-label small fw-medium">Only show these service slugs (one per line — leave blank to show all active services)</label><textarea name="slugsLines" class="form-control" rows="2"><%= (d.slugs || []).join('\n') %></textarea></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+        </select>
+    </div>
+</div>
+
+<h6 class="fw-bold small text-uppercase text-secondary">Optional Wide CTA Card (appended after the service cards)</h6>
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><label class="form-label small">CTA Title</label><input type="text" name="wideCtaTitle" class="form-control" value="<%= wc.title %>"></div>
+    <div class="col-md-4"><label class="form-label small">CTA Text</label><input type="text" name="wideCtaText" class="form-control" value="<%= wc.text %>"></div>
+    <div class="col-md-2"><label class="form-label small">Button Label</label><input type="text" name="wideCtaButtonLabel" class="form-control" value="<%= wcBtn.label %>"></div>
+    <div class="col-md-2"><label class="form-label small">Button Href</label><input type="text" name="wideCtaButtonHref" class="form-control" value="<%= wcBtn.href %>"></div>
+</div>
+
+<%- include('_bottom', { page, section }) %>

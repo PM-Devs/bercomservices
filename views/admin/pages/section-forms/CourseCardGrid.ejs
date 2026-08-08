@@ -1,0 +1,28 @@
+<% var d = section.data || {}; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3">
+    <div class="col-md-3"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-3"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-3"><label class="form-label small fw-medium">Category Filter</label>
+        <select name="category" class="form-select">
+            <option value="all" <%= (!d.category || d.category === 'all') ? 'selected' : '' %>>All Courses</option>
+            <option value="iso-lead-auditor" <%= d.category === 'iso-lead-auditor' ? 'selected' : '' %>>ISO Lead Auditor Only</option>
+            <option value="hse-safety" <%= d.category === 'hse-safety' ? 'selected' : '' %>>HSE Safety Only</option>
+        </select>
+    </div>
+    <div class="col-md-3"><label class="form-label small fw-medium">"Enrol Now" Href</label><input type="text" name="enrollHref" class="form-control" value="<%= d.enrollHref || '/courses#enroll' %>"></div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+    <div class="col-md-3"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+        </select>
+    </div>
+    <div class="col-md-3"><label class="form-label small fw-medium">Limit (blank = show all)</label><input type="number" name="limit" class="form-control" value="<%= d.limit || '' %>" placeholder="e.g. 4"></div>
+    <div class="col-md-3"><label class="form-label small fw-medium">"View All" Button Href (optional)</label><input type="text" name="viewAllHref" class="form-control" value="<%= d.viewAllHref %>" placeholder="/courses"></div>
+    <div class="col-md-3"><label class="form-label small fw-medium">"View All" Button Label</label><input type="text" name="viewAllLabel" class="form-control" value="<%= d.viewAllLabel %>" placeholder="View All Courses"></div>
+</div>
+<p class="small text-secondary mt-2">Content comes from the Courses collection — manage the actual courses under <a href="/admin/collections/courses">Collections &rarr; Courses</a>.</p>
+
+<%- include('_bottom', { page, section }) %>

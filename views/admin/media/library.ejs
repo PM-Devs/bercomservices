@@ -1,0 +1,38 @@
+<div class="admin-card mb-4">
+    <h6 class="fw-bold mb-3">Upload New File</h6>
+    <form method="POST" action="/admin/media" enctype="multipart/form-data" class="row g-2 align-items-end">
+        <div class="col-md-5">
+            <label class="form-label small">File (JPG, PNG, WEBP, GIF, SVG — max 8MB)</label>
+            <input type="file" name="file" class="form-control" accept="image/*" required>
+        </div>
+        <div class="col-md-5">
+            <label class="form-label small">Alt Text</label>
+            <input type="text" name="altText" class="form-control" placeholder="Describe the image">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn bc-btn-primary w-100">Upload</button>
+        </div>
+    </form>
+</div>
+
+<div class="row g-3">
+    <% if (!items.length) { %>
+        <p class="text-secondary">No media uploaded yet.</p>
+    <% } %>
+    <% items.forEach(function (item) { %>
+        <div class="col-6 col-md-3 col-lg-2">
+            <div class="admin-card p-2">
+                <img src="<%= item.url %>" alt="<%= item.altText %>" class="w-100 mb-2" style="height:100px; object-fit:cover; border-radius:6px;">
+                <p class="small text-truncate mb-1" title="<%= item.filename %>"><%= item.filename %></p>
+                <div class="d-flex gap-1">
+                    <button type="button" class="btn btn-sm btn-outline-secondary flex-fill" onclick="navigator.clipboard.writeText('<%= item.url %>')">Copy URL</button>
+                    <form action="/admin/media/<%= item._id %>?_method=DELETE" method="POST" data-confirm="Delete this file?">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <i class="material-icons-round" style="font-size:1rem;">delete</i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+</div>

@@ -1,0 +1,50 @@
+<nav class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+        <i class="fas fa-globe-africa"></i> BerCom Admin
+    </div>
+
+    <a class="admin-nav-link <%= currentPath === '/admin' ? 'active' : '' %>" href="/admin">
+        <i class="material-icons-round">dashboard</i> Dashboard
+    </a>
+
+    <div class="admin-nav-section-label">Content</div>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/pages') ? 'active' : '' %>" href="/admin/pages">
+        <i class="material-icons-round">description</i> Pages &amp; Sections
+    </a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/media') ? 'active' : '' %>" href="/admin/media">
+        <i class="material-icons-round">perm_media</i> Media Library
+    </a>
+
+    <div class="admin-nav-section-label">Collections</div>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/collections/services') ? 'active' : '' %>" href="/admin/collections/services">
+        <i class="material-icons-round">handyman</i> Services
+    </a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/collections/courses') ? 'active' : '' %>" href="/admin/collections/courses">
+        <i class="material-icons-round">school</i> Courses
+    </a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/collections/team') ? 'active' : '' %>" href="/admin/collections/team">
+        <i class="material-icons-round">groups</i> Team
+    </a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/collections/testimonials') ? 'active' : '' %>" href="/admin/collections/testimonials">
+        <i class="material-icons-round">format_quote</i> Testimonials
+    </a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/collections/clients') ? 'active' : '' %>" href="/admin/collections/clients">
+        <i class="material-icons-round">business</i> Clients
+    </a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/collections/iso-standards') ? 'active' : '' %>" href="/admin/collections/iso-standards">
+        <i class="material-icons-round">verified</i> ISO Standards
+    </a>
+
+    <div class="admin-nav-section-label">Research Agent</div>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/research') ? 'active' : '' %>" href="/admin/research">
+        <i class="material-icons-round">travel_explore</i> Prospect Research
+    </a>
+
+    <div class="admin-nav-section-label">Site</div>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/settings') ? 'active' : '' %>" href="/admin/settings">
+        <i class="material-icons-round">settings</i> Site Settings
+    </a>
+    <a class="admin-nav-link" href="/" target="_blank">
+        <i class="material-icons-round">open_in_new</i> View Website
+    </a>
+</nav>

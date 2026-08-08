@@ -1,0 +1,57 @@
+<%
+// Slides authored before this redesign only stored a CSS background class;
+// map those to a real photo URL so every slide still has an actual image.
+var legacyBgMap = {
+    'bc-hero-slide-1': '/img/carousel-1.jpg',
+    'bc-hero-slide-2': '/img/header-1.jpg',
+    'bc-hero-slide-3': '/img/header-2.jpg'
+};
+%>
+<div class="bc-hero-wrap">
+<section class="bc-hero-carousel owl-carousel">
+    <% (data.slides || []).forEach(function (slide) { %>
+        <div class="bc-hero-item" style="background-image:url('<%= slide.bgImage || legacyBgMap[slide.bgImageClass] || '/img/banner-img.jpg' %>')">
+            <div class="bc-hero-overlay"></div>
+            <div class="bc-hero-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <% if (slide.badge) { %><span class="bc-hero-badge"><%= slide.badge %></span><% } %>
+                            <h1 class="bc-hero-title"><%= slide.title %></h1>
+                            <p class="bc-hero-sub"><%= slide.subtitle %></p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <% if (slide.ctaPrimary && slide.ctaPrimary.label) { %>
+                                    <a href="<%= slide.ctaPrimary.href %>" class="btn bc-btn-primary btn-lg px-4"><%= slide.ctaPrimary.label %></a>
+                                <% } %>
+                                <% if (slide.ctaSecondary && slide.ctaSecondary.label) { %>
+                                    <a href="<%= slide.ctaSecondary.href %>" class="btn bc-btn-outline btn-lg px-4"><%= slide.ctaSecondary.label %></a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+</section>
+
+<% if (data.quickChips && data.quickChips.length) { %>
+<div class="bc-hero-chips d-none d-lg-flex">
+    <% data.quickChips.forEach(function (chip) { %>
+        <div class="bc-hero-chip"><span class="bc-hero-chip-dot"></span><i class="material-icons-round"><%= chip.icon %></i><%= chip.label %></div>
+    <% }); %>
+</div>
+<% } %>
+
+<% if (data.showQuickForm !== false) { %>
+<div class="bc-hero-quickform d-none d-lg-block">
+    <h6 class="fw-bold mb-3"><%= data.quickFormTitle || 'Send a Request' %></h6>
+    <form method="POST" action="/contact">
+        <input type="text" name="fullName" class="form-control form-control-sm mb-2" placeholder="Full Name">
+        <input type="email" name="email" class="form-control form-control-sm mb-2" placeholder="Email Address">
+        <textarea name="message" class="form-control form-control-sm mb-3" rows="2" placeholder="I need help with..."></textarea>
+        <button type="submit" class="btn bc-btn-primary btn-sm w-100">Submit Request</button>
+    </form>
+</div>
+<% } %>
+</div>

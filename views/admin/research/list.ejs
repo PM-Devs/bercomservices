@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="btn-group btn-group-sm" role="group">
+        <a href="/admin/research?status=pending_review" class="btn <%= statusFilter === 'pending_review' ? 'bc-btn-primary' : 'btn-outline-secondary' %>">Pending Review</a>
+        <a href="/admin/research?status=approved" class="btn <%= statusFilter === 'approved' ? 'bc-btn-primary' : 'btn-outline-secondary' %>">Approved</a>
+        <a href="/admin/research?status=rejected" class="btn <%= statusFilter === 'rejected' ? 'bc-btn-primary' : 'btn-outline-secondary' %>">Rejected</a>
+        <a href="/admin/research?status=all" class="btn <%= statusFilter === 'all' ? 'bc-btn-primary' : 'btn-outline-secondary' %>">All</a>
+    </div>
+    <form method="POST" action="/admin/research/run">
+        <button type="submit" class="btn bc-btn-primary btn-sm bc-run-btn">
+            <i class="material-icons-round align-middle bc-run-btn-icon" style="font-size:1rem;">travel_explore</i>
+            <span class="bc-run-btn-label">Run Research Now</span>
+            <span class="bc-run-btn-lottie align-middle"></span>
+        </button>
+    </form>
+</div>
+
+<% if (recentRuns.length) { %>
+<div class="admin-card mb-4">
+    <h6 class="fw-bold mb-2">Recent Runs</h6>
+    <table class="table table-sm admin-table mb-0">
+        <thead><tr><th>When</th><th>Trigger</th><th>Articles</th><th>Prospects</th><th>Status</th></tr></thead>
+        <tbody>
+            <% recentRuns.forEach(function (run) { %>
+                <tr>
+                    <td><%= new Date(run.runAt).toLocaleString() %></td>
+                    <td><%= run.trigger %></td>
+                    <td><%= run.articlesFound %></td>
+                    <td><%= run.prospectsCreated %></td>
+                    <td>
+                        <% if (run.status === 'completed') { %><span class="badge badge-status-approved">Completed</span><% } %>
+                        <% if (run.status === 'failed') { %><span class="badge badge-status-rejected" title="<%= run.error %>">Failed</span><% } %>
+                        <% if (run.status === 'running') { %><span class="badge badge-status-pending_review">Running</span><% } %>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+<% } %>
+
+<% if (!prospects.length) { %>
+    <div class="admin-card text-center text-secondary py-5">No prospects in this view yet. Click "Run Research Now" to search for new ones.</div>
+<% } %>
+
+<% prospects.forEach(function (p) { %>
+    <% var draft = draftsByProspect[p._id.toString()]; %>
+    <div class="admin-card mb-3">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h6 class="fw-bold mb-1"><%= p.companyName %> <span class="small text-secondary">(<%= p.country %>)</span></h6>
+                <p class="small text-secondary mb-1"><%= p.summary %></p>
+                <p class="small mb-2"><strong>Matched services:</strong> <%= (p.matchedServices || []).join(', ') || 'n/a' %></p>
+                <span class="badge badge-status-<%= p.status %>">Confidence: <%= Math.round((p.confidenceScore || 0) * 100) %>%</span>
+            </div>
+            <% if (p.status === 'pending_review') { %>
+                <div class="d-flex gap-2">
+                    <form method="POST" action="/admin/research/<%= p._id %>/approve"><button class="btn btn-sm btn-outline-success">Approve</button></form>
+                    <form method="POST" action="/admin/research/<%= p._id %>/reject"><button class="btn btn-sm btn-outline-danger">Reject</button></form>
+                </div>
+            <% } %>
+        </div>
+
+        <% if (p.sourceArticles && p.sourceArticles.length) { %>
+            <div class="mt-2">
+                <span class="small fw-medium">Sources:</span>
+                <ul class="small mb-0">
+                    <% p.sourceArticles.forEach(function (a) { %>
+                        <li><a href="<%= a.link %>" target="_blank" rel="noopener noreferrer"><%= a.title %></a> — <%= a.source %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+
+        <% if (draft) { %>
+            <hr>
+            <form method="POST" action="/admin/research/draft/<%= draft._id %>?_method=PUT">
+                <label class="form-label small fw-medium">Draft Subject</label>
+                <input type="text" name="subject" class="form-control form-control-sm mb-2" value="<%= draft.subject %>">
+                <label class="form-label small fw-medium">Draft Body</label>
+                <textarea name="body" class="form-control form-control-sm mb-2" rows="6"><%= draft.body %></textarea>
+                <button type="submit" class="btn btn-sm btn-outline-secondary">Save Draft Edits</button>
+                <span class="small text-secondary ms-2">Status: <%= draft.status %></span>
+            </form>
+        <% } %>
+    </div>
+<% }); %>

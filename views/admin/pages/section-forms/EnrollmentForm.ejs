@@ -1,0 +1,36 @@
+<% var d = section.data || {}; var modes = d.deliveryModes || []; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+</div>
+<p class="small text-secondary">Course checkboxes are generated automatically from the Courses collection (<a href="/admin/collections/courses">manage here</a>). Name/email/phone/date/notes fields are fixed for this form type.</p>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Delivery Modes (leave empty to use the default Open/In-House/On-Site set)</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="dm-repeater">Add Mode</button>
+</div>
+<div id="dm-repeater">
+    <template>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-2"><label class="form-label small">Value</label><input type="text" name="dmValue" class="form-control form-control-sm"></div>
+            <div class="col-md-3"><label class="form-label small">Label</label><input type="text" name="dmLabel" class="form-control form-control-sm"></div>
+            <div class="col-md-4"><label class="form-label small">Sub-text</label><input type="text" name="dmSub" class="form-control form-control-sm"></div>
+            <div class="col-md-3"><label class="form-label small">Icon</label><input type="text" name="dmIcon" class="form-control form-control-sm"></div>
+        </div>
+    </template>
+    <% modes.forEach(function (m) { %>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-2"><label class="form-label small">Value</label><input type="text" name="dmValue" class="form-control form-control-sm" value="<%= m.value %>"></div>
+            <div class="col-md-3"><label class="form-label small">Label</label><input type="text" name="dmLabel" class="form-control form-control-sm" value="<%= m.label %>"></div>
+            <div class="col-md-4"><label class="form-label small">Sub-text</label><input type="text" name="dmSub" class="form-control form-control-sm" value="<%= m.sub %>"></div>
+            <div class="col-md-3"><label class="form-label small">Icon</label><input type="text" name="dmIcon" class="form-control form-control-sm" value="<%= m.icon %>"></div>
+        </div>
+    <% }); %>
+</div>
+
+<%- include('_bottom', { page, section }) %>

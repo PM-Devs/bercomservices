@@ -1,0 +1,15 @@
+<a href="/admin/pages/<%= page._id %>/edit" class="btn btn-sm btn-outline-secondary mb-3">&larr; Back to Page</a>
+<form method="POST" action="/admin/pages/<%= page._id %>/sections/<%= section._id %>?_method=PUT">
+<div class="admin-card">
+<div class="row g-3 mb-3">
+    <div class="col-md-6">
+        <label class="form-label small fw-medium">Anchor ID (optional, for in-page links)</label>
+        <input type="text" name="anchorId" class="form-control" value="<%= section.anchorId %>">
+    </div>
+    <div class="col-md-6 d-flex align-items-end pb-2">
+        <div class="form-check">
+            <input type="checkbox" name="visible" class="form-check-input" id="visible" <%= section.visible !== false ? 'checked' : '' %>>
+            <label class="form-check-label small" for="visible">Visible</label>
+        </div>
+    </div>
+</div>

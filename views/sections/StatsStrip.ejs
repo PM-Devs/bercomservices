@@ -1,0 +1,25 @@
+<% if ((data.variant || 'strip') === 'chips') { %>
+<div class="d-flex flex-wrap justify-content-center gap-3 my-4">
+    <% (data.items || []).forEach(function (item, i) { %>
+        <div class="bc-intro-chip wow fadeInUp" data-wow-delay="<%= (i * 0.1).toFixed(1) %>s">
+            <span class="bc-intro-chip-num"><%= item.value %></span>
+            <span class="bc-intro-chip-label"><%= item.label %></span>
+        </div>
+    <% }); %>
+</div>
+<% } else { %>
+<section class="bc-stats-strip">
+    <div class="container">
+        <div class="row g-3 text-center">
+            <% (data.items || []).forEach(function (item) { %>
+                <div class="col-6 col-lg-<%= Math.floor(12 / (data.items.length || 4)) %>">
+                    <div class="bc-stat-item">
+                        <h3 class="fw-bold mb-0"><%= item.value %></h3>
+                        <span class="bc-stat-label small"><%= item.label %></span>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+<% } %>

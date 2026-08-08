@@ -1,0 +1,84 @@
+<% var d = section.data || {}; var fb = d.featureBlocks || []; var st = d.statTiles || []; var ka = d.keyAdvantages || {}; var cta = d.cta || {}; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Theme</label>
+        <select name="theme" class="form-select">
+            <option value="dark" <%= d.theme !== 'light' ? 'selected' : '' %>>Dark</option>
+            <option value="light" <%= d.theme === 'light' ? 'selected' : '' %>>Light</option>
+        </select>
+    </div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">CTA Label</label><input type="text" name="ctaLabel" class="form-control" value="<%= cta.label %>"></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">CTA Href</label><input type="text" name="ctaHref" class="form-control" value="<%= cta.href %>"></div>
+    <div class="col-12">
+        <label class="form-label small fw-medium">Right-column Photo (optional — shows above the stat tiles, e.g. a large team/operations photo)</label>
+        <div class="input-group">
+            <input type="text" name="photo" class="form-control" value="<%= d.photo %>" placeholder="/uploads/filename.jpg">
+            <a href="/admin/media" target="_blank" class="btn btn-outline-secondary">Browse</a>
+        </div>
+        <% if (d.photo) { %><img src="<%= d.photo %>" class="mt-2" style="height:60px;border-radius:6px;"><% } %>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Feature Blocks</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="fb-repeater">Add Block</button>
+</div>
+<div id="fb-repeater" class="mb-3">
+    <template>
+        <div class="repeater-item">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="row g-2">
+                <div class="col-md-3"><label class="form-label small">Icon</label><input type="text" name="fbIcon" class="form-control form-control-sm"></div>
+                <div class="col-md-3"><label class="form-label small">Title</label><input type="text" name="fbTitle" class="form-control form-control-sm"></div>
+                <div class="col-md-6"><label class="form-label small">Text</label><input type="text" name="fbText" class="form-control form-control-sm"></div>
+                <div class="col-12"><label class="form-label small">Bullets (one per line)</label><textarea name="fbBulletsLines" class="form-control form-control-sm" rows="2"></textarea></div>
+            </div>
+        </div>
+    </template>
+    <% fb.forEach(function (block) { %>
+        <div class="repeater-item">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="row g-2">
+                <div class="col-md-3"><label class="form-label small">Icon</label><input type="text" name="fbIcon" class="form-control form-control-sm" value="<%= block.icon %>"></div>
+                <div class="col-md-3"><label class="form-label small">Title</label><input type="text" name="fbTitle" class="form-control form-control-sm" value="<%= block.title %>"></div>
+                <div class="col-md-6"><label class="form-label small">Text</label><input type="text" name="fbText" class="form-control form-control-sm" value="<%= block.text %>"></div>
+                <div class="col-12"><label class="form-label small">Bullets (one per line)</label><textarea name="fbBulletsLines" class="form-control form-control-sm" rows="2"><%= (block.bullets || []).join('\n') %></textarea></div>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Stat Tiles</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="st-repeater">Add Stat</button>
+</div>
+<div id="st-repeater" class="mb-3">
+    <template>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-4"><label class="form-label small">Icon</label><input type="text" name="stIcon" class="form-control form-control-sm"></div>
+            <div class="col-md-4"><label class="form-label small">Value</label><input type="text" name="stValue" class="form-control form-control-sm"></div>
+            <div class="col-md-4"><label class="form-label small">Label</label><input type="text" name="stLabel" class="form-control form-control-sm"></div>
+        </div>
+    </template>
+    <% st.forEach(function (tile) { %>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-4"><label class="form-label small">Icon</label><input type="text" name="stIcon" class="form-control form-control-sm" value="<%= tile.icon %>"></div>
+            <div class="col-md-4"><label class="form-label small">Value</label><input type="text" name="stValue" class="form-control form-control-sm" value="<%= tile.value %>"></div>
+            <div class="col-md-4"><label class="form-label small">Label</label><input type="text" name="stLabel" class="form-control form-control-sm" value="<%= tile.label %>"></div>
+        </div>
+    <% }); %>
+</div>
+
+<h6 class="fw-bold small text-uppercase text-secondary">Optional "Key Advantages" Box</h6>
+<div class="row g-3">
+    <div class="col-md-4"><label class="form-label small">Title</label><input type="text" name="keyAdvTitle" class="form-control" value="<%= ka.title %>"></div>
+    <div class="col-md-8"><label class="form-label small">Items (one per line)</label><textarea name="keyAdvItemsLines" class="form-control" rows="2"><%= (ka.items || []).join('\n') %></textarea></div>
+</div>
+
+<%- include('_bottom', { page, section }) %>

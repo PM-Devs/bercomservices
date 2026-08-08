@@ -1,0 +1,24 @@
+<% var d = section.data || {}; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Display Variant</label>
+        <select name="variant" class="form-select">
+            <option value="cards" <%= (!d.variant || d.variant === 'cards') ? 'selected' : '' %>>Cards</option>
+            <option value="cardsWithBadge" <%= d.variant === 'cardsWithBadge' ? 'selected' : '' %>>Cards with Date Badge</option>
+            <option value="table" <%= d.variant === 'table' ? 'selected' : '' %>>Table (Project References)</option>
+        </select>
+    </div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+        </select>
+    </div>
+</div>
+<p class="small text-secondary mt-2">Content comes from the Clients collection — manage the actual clients under <a href="/admin/collections/clients">Collections &rarr; Clients</a>.</p>
+
+<%- include('_bottom', { page, section }) %>

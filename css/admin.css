@@ -1,0 +1,118 @@
+/* Admin panel — reuses the public site's --bc-* tokens (defined in style.css) for brand
+   consistency, but with its own compact dashboard layout. No new color values introduced. */
+
+body.admin-body {
+    background: var(--bc-bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--bc-text);
+    min-height: 100vh;
+}
+
+.admin-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--bc-dark);
+    color: rgba(255, 255, 255, 0.85);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+.admin-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px 20px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 12px;
+}
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s ease, color 0.2s ease;
+    border-left: 3px solid transparent;
+}
+.admin-nav-link:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+.admin-nav-link.active {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border-left-color: var(--bc-primary-light);
+}
+.admin-nav-link .material-icons-round { font-size: 1.15rem; }
+.admin-nav-section-label {
+    padding: 16px 20px 6px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.admin-main { flex: 1; min-width: 0; }
+.admin-topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--bc-border);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.admin-content { padding: 28px; }
+
+.admin-card {
+    background: #fff;
+    border: 1px solid var(--bc-border);
+    border-radius: var(--bc-radius-lg);
+    padding: 24px;
+    box-shadow: var(--bc-shadow-1);
+}
+
+.admin-stat-card {
+    background: #fff;
+    border: 1px solid var(--bc-border);
+    border-radius: var(--bc-radius-lg);
+    padding: 20px;
+    text-align: center;
+}
+.admin-stat-card .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--bc-primary); }
+.admin-stat-card .stat-label { font-size: 0.78rem; color: var(--bc-muted); }
+
+.repeater-item {
+    border: 1px solid var(--bc-border);
+    border-radius: var(--bc-radius);
+    padding: 16px;
+    margin-bottom: 12px;
+    position: relative;
+    background: var(--bc-bg);
+}
+.repeater-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.admin-table th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--bc-muted); }
+
+.badge-status-pending_review { background: #FFF3E0; color: #E65100; }
+.badge-status-approved { background: #E8F5E9; color: #2E7D32; }
+.badge-status-rejected { background: #FFEBEE; color: #C62828; }
+.badge-status-sent, .badge-status-contacted { background: var(--bc-primary-soft); color: var(--bc-primary); }
+
+@media (max-width: 900px) {
+    .admin-sidebar { position: fixed; left: -240px; z-index: 1000; transition: left 0.2s ease; }
+    .admin-sidebar.open { left: 0; }
+}

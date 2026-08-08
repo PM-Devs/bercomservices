@@ -1,0 +1,33 @@
+{
+  "name": "bercom-cms",
+  "version": "1.0.0",
+  "description": "BerCom Services website — Express/EJS/MongoDB CMS with RAG prospect-research agent",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "migrate": "node scripts/migrate.js",
+    "seed-admin": "node scripts/seed-admin.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cheerio": "^1.0.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.0",
+    "fast-xml-parser": "^5.0.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.5.0",
+    "multer": "^2.2.0",
+    "node-cron": "^4.0.0",
+    "sanitize-html": "^2.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

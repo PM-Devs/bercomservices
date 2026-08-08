@@ -1,0 +1,13 @@
+<section class="bc-logo-strip <%= data.sectionBg || 'bc-section-white' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <% if (data.label) { %><p class="bc-logo-strip-label text-center wow fadeInUp" data-wow-delay="0.1s"><%= data.label %></p><% } %>
+        <div class="bc-logo-row wow fadeInUp" data-wow-delay="0.15s">
+            <% (data.logos || []).forEach(function (logo) { %>
+                <div class="bc-logo-item">
+                    <i class="material-icons-round"><%= logo.icon || 'business' %></i>
+                    <span><%= logo.name %></span>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>

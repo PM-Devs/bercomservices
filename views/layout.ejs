@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('partials/head') %>
+</head>
+<body class="site-page site-page-<%= currentSlug %>">
+<% if (currentSlug !== 'home') { %><div class="site-shell"><%- include('partials/nav') %><% } %>
+
+<%- body %>
+
+<% if (currentSlug !== 'home') { %><%- include('partials/footer') %></div><% } else { %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/home.js?v=8"></script>
+<script src="/js/motion.js?v=8"></script>
+<% } %>
+</body>
+</html>

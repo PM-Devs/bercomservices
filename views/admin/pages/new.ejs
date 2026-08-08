@@ -1,0 +1,34 @@
+<form method="POST" action="/admin/pages">
+    <div class="admin-card">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label small fw-medium">Slug (used in the URL, e.g. "about") <span class="text-danger">*</span></label>
+                <input type="text" name="slug" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label small fw-medium">Title <span class="text-danger">*</span></label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+            <div class="col-12">
+                <label class="form-label small fw-medium">Meta Description</label>
+                <textarea name="metaDescription" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="col-12">
+                <label class="form-label small fw-medium">Meta Keywords</label>
+                <input type="text" name="metaKeywords" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label small fw-medium">Page Hero Label</label>
+                <input type="text" name="pageHeroLabel" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label small fw-medium">Page Hero Title</label>
+                <input type="text" name="pageHeroTitle" class="form-control">
+            </div>
+        </div>
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn bc-btn-primary">Create Page</button>
+            <a href="/admin/pages" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </div>
+</form>

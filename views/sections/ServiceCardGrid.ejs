@@ -1,0 +1,51 @@
+<% var list = (data.slugs && data.slugs.length) ? services.filter(s => data.slugs.includes(s.slug)) : services; %>
+<% var isFull = data.variant === 'full'; %>
+<% var fallbackPhotos = ['/img/header-1.jpg','/img/commercial-1.jpg','/img/industrial-1.jpg','/img/header-2.jpg','/img/residential-1.jpg','/img/commercial-2.jpg','/img/industrial-2.jpg','/img/residential-2.jpg']; %>
+<section class="bc-section <%= data.sectionBg || 'bc-section-white' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <h2 class="bc-section-title"><%= data.title %></h2>
+            <% if (data.intro) { %><p class="text-secondary bc-max-650 mx-auto mb-0"><%= data.intro %></p><% } %>
+        </div>
+        <div class="row g-4">
+            <% list.forEach(function (svc, i) { %>
+                <div class="col-md-6 col-lg-<%= isFull ? 6 : 4 %> wow fadeInUp" data-wow-delay="<%= (0.1 + (i % 4) * 0.1).toFixed(1) %>s">
+                    <div class="bc-service-card h-100" <% if (svc.slug) { %>id="<%= svc.slug %>"<% } %>>
+                        <div class="bc-service-photo"><img src="<%= svc.photo || fallbackPhotos[i % fallbackPhotos.length] %>" alt="<%= svc.title %>"></div>
+                        <div class="bc-svc-icon mb-3"><i class="material-icons-round"><%= svc.icon %></i></div>
+                        <h5 class="fw-bold mb-2"><%= svc.title %></h5>
+                        <p class="text-secondary small <%= isFull ? 'mb-3' : 'mb-0' %>" <% if (isFull) { %>data-read-more data-lines="4"<% } %>><%= isFull ? svc.longDescription : svc.shortDescription %></p>
+                        <% if (isFull) { %>
+                            <% if (svc.bulletGroups && svc.bulletGroups.length) { %><details class="bc-card-details"><summary>View scope & capabilities <i class="material-icons-round">expand_more</i></summary><div>
+                                <% svc.bulletGroups.forEach(function (group) { %>
+                                    <% if (group.subheading) { %><h6 class="small fw-bold text-uppercase mb-2 mt-3"><%= group.subheading %></h6><% } %>
+                                    <ul class="bc-svc-list"><% (group.items || []).forEach(function (item) { %><li><%= item %></li><% }); %></ul>
+                                <% }); %>
+                            </div></details><% } %>
+                            <a href="/contact?service=<%= svc.slug %>#contact-form" class="btn bc-btn-primary btn-sm w-100 mt-3">
+                                <i class="material-icons-round me-1 align-middle" style="font-size:1.1rem;">send</i>Request This Service
+                            </a>
+                        <% } else { %>
+                            <a href="/services#<%= svc.slug %>" class="bc-svc-learn-more">Learn More <i class="material-icons-round">arrow_forward</i></a>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+
+            <% if (data.wideCta && data.wideCta.title) { %>
+                <div class="col-lg-<%= isFull ? 12 : 8 %> wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="bc-svc-cta h-100">
+                        <div>
+                            <h4 class="text-white fw-bold mb-1"><%= data.wideCta.title %></h4>
+                            <p class="bc-text-muted-white mb-0"><%= data.wideCta.text %></p>
+                        </div>
+                        <% if (data.wideCta.button) { %>
+                            <a href="<%= data.wideCta.button.href %>" class="btn bc-btn-outline px-4 ms-3"><%= data.wideCta.button.label %></a>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</section>

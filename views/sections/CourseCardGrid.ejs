@@ -1,0 +1,42 @@
+<% var list = (data.category && data.category !== 'all') ? courses.filter(c => c.category === data.category) : courses; %>
+<% if (data.limit) { list = list.slice(0, Number(data.limit)); } %>
+<% var coursePhotos = ['/img/industrial-1.jpg','/img/commercial-1.jpg','/img/industrial-2.jpg','/img/commercial-2.jpg','/img/header-2.jpg','/img/residential-1.jpg']; %>
+<section class="bc-section <%= data.sectionBg || 'bc-section-white' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <h2 class="bc-section-title"><%= data.title %></h2>
+            <% if (data.intro) { %><p class="text-secondary bc-max-650 mx-auto mb-0"><%= data.intro %></p><% } %>
+        </div>
+        <div class="row g-4">
+            <% list.forEach(function (course, i) { %>
+                <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="<%= (0.1 + (i % 4) * 0.1).toFixed(1) %>s">
+                    <div class="bc-course-card">
+                        <div class="bc-course-img bc-course-img-<%= course.gradientKey %>" style="background-image:linear-gradient(rgba(4,44,54,.32),rgba(4,44,54,.62)),url('<%= course.photo || coursePhotos[i % coursePhotos.length] %>');background-size:cover;background-position:center;">
+                            <span class="bc-course-badge"><%= course.durationLabel %></span>
+                            <i class="material-icons-round"><%= course.icon %></i>
+                        </div>
+                        <div class="bc-course-body">
+                            <span class="bc-course-cat"><%= course.category === 'iso-lead-auditor' ? 'ISO Lead Auditor' : 'HSE Safety' %></span>
+                            <h6 class="bc-course-title"><%= course.title %></h6>
+                            <p class="bc-course-desc" data-read-more data-lines="3"><%= course.description %></p>
+                            <% if (course.bullets && course.bullets.length) { %><details class="bc-card-details"><summary>Course details <i class="material-icons-round">expand_more</i></summary><ul class="bc-svc-list mb-0"><% course.bullets.forEach(function (b) { %><li><%= b %></li><% }); %></ul></details><% } %>
+                            <div class="bc-course-price">
+                                <span class="bc-price-label"><%= course.priceLabel %>:</span>
+                                <span class="bc-price-value"><%= course.priceValue %></span>
+                            </div>
+                            <a href="<%= data.enrollHref || '/courses#enroll' %>" class="btn bc-btn-primary btn-sm w-100 mt-3">Enrol Now</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <% if (data.viewAllHref) { %>
+            <div class="text-center mt-5 wow fadeInUp" data-wow-delay="0.2s">
+                <a href="<%= data.viewAllHref %>" class="btn bc-btn-outline-primary btn-lg px-5">
+                    <%= data.viewAllLabel || 'View All Courses' %> <i class="material-icons-round align-middle ms-1">arrow_forward</i>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</section>

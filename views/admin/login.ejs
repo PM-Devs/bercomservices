@@ -1,0 +1,24 @@
+<div class="d-flex align-items-center justify-content-center" style="min-height:100vh;">
+    <div class="admin-card" style="width:100%; max-width:380px;">
+        <div class="text-center mb-4">
+            <div class="bc-brand-icon mx-auto mb-2" style="width:48px;height:48px;"><i class="fas fa-globe-africa"></i></div>
+            <h5 class="fw-bold mb-0">BerCom Admin</h5>
+            <span class="text-secondary small">Sign in to manage the website</span>
+        </div>
+
+        <% (successMessages || []).forEach(function (msg) { %><div class="alert alert-success"><%= msg %></div><% }); %>
+        <% (errorMessages || []).forEach(function (msg) { %><div class="alert alert-danger"><%= msg %></div><% }); %>
+
+        <form method="POST" action="/admin/login">
+            <div class="mb-3">
+                <label class="form-label small fw-medium">Email</label>
+                <input type="email" name="email" class="form-control" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label class="form-label small fw-medium">Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn bc-btn-primary w-100">Sign In</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,153 @@
+<% if (data.showMiniCards) { %>
+<section class="bc-section-white py-0">
+    <div class="container">
+        <div class="row g-4 bc-mini-cards-row">
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="bc-contact-mini-card">
+                    <div class="bc-contact-icon flex-shrink-0"><i class="material-icons-round">location_on</i></div>
+                    <div>
+                        <span class="bc-contact-mini-label">Our Office</span>
+                        <h6 class="fw-bold mb-1"><%= settings.address.split(',')[0] %></h6>
+                        <p class="text-secondary mb-0 small"><%= settings.address.split(',').slice(1).join(',').trim() %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="bc-contact-mini-card">
+                    <div class="bc-contact-icon flex-shrink-0"><i class="material-icons-round">email</i></div>
+                    <div>
+                        <span class="bc-contact-mini-label">Email Us</span>
+                        <h6 class="fw-bold mb-1">General Enquiries</h6>
+                        <a href="mailto:<%= settings.email %>" class="text-secondary text-decoration-none small"><%= settings.email %></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="bc-contact-mini-card">
+                    <div class="bc-contact-icon flex-shrink-0"><i class="material-icons-round">phone_in_talk</i></div>
+                    <div>
+                        <span class="bc-contact-mini-label">Call Us</span>
+                        <h6 class="fw-bold mb-1">Main Line</h6>
+                        <a href="tel:<%= settings.phone.replace(/\s+/g, '') %>" class="text-secondary text-decoration-none small"><%= settings.phone %></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<% } %>
+
+<section id="<%= anchorId || 'contact-form' %>" class="bc-section bc-section-light">
+    <div class="container">
+        <div class="row g-5">
+            <% if (data.showForm !== false) { %>
+            <div class="col-lg-7 wow fadeInLeft" data-wow-delay="0.2s">
+                <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+                <h2 class="bc-section-title mb-1"><%= data.title %></h2>
+                <% if (data.intro) { %><p class="text-secondary mb-4"><%= data.intro %></p><% } %>
+                <form class="bc-form" method="POST" action="/contact" novalidate>
+                    <div class="row g-3">
+                        <% (data.formFields || []).forEach(function (field) { %>
+                            <div class="col-<%= field.half ? 'sm-6' : '12' %>">
+                                <label for="<%= field.name %>" class="form-label fw-medium small">
+                                    <%= field.label %><% if (field.required) { %> <span class="text-danger">*</span><% } %>
+                                </label>
+                                <% if (field.type === 'textarea') { %>
+                                    <textarea id="<%= field.name %>" name="<%= field.name %>" class="form-control" rows="5" placeholder="<%= field.placeholder || '' %>" <%= field.required ? 'required' : '' %>></textarea>
+                                <% } else if (field.type === 'select') { %>
+                                    <select id="<%= field.name %>" name="<%= field.name %>" class="form-select">
+                                        <option value="">Select a service...</option>
+                                        <% (field.options || []).forEach(function (opt) { %>
+                                            <option value="<%= opt.value %>"><%= opt.label %></option>
+                                        <% }); %>
+                                    </select>
+                                <% } else { %>
+                                    <input type="<%= field.type || 'text' %>" id="<%= field.name %>" name="<%= field.name %>" class="form-control" placeholder="<%= field.placeholder || '' %>" <%= field.required ? 'required' : '' %>>
+                                <% } %>
+                            </div>
+                        <% }); %>
+                        <div class="col-12">
+                            <button type="submit" class="btn bc-btn-primary btn-lg w-100">
+                                <i class="material-icons-round me-2 bc-send-icon align-middle">send</i><%= data.submitLabel || 'Send Message' %>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <% } %>
+
+            <% if (data.showDetailsCard !== false) { %>
+            <div class="col-lg-<%= data.showForm === false ? 12 : 5 %> wow fadeInRight" data-wow-delay="0.3s">
+                <span class="bc-section-label">Contact Details</span>
+                <h2 class="bc-section-title mb-4">Reach Us Directly</h2>
+
+                <div class="bc-contact-card mb-4">
+                    <div class="bc-contact-row">
+                        <div class="bc-contact-icon"><i class="material-icons-round">location_on</i></div>
+                        <div><h6 class="fw-bold mb-1">Our Location</h6><p class="text-secondary mb-0 small"><%= settings.address %></p></div>
+                    </div>
+                    <div class="bc-contact-row">
+                        <div class="bc-contact-icon"><i class="material-icons-round">email</i></div>
+                        <div><h6 class="fw-bold mb-1">Email Address</h6><a href="mailto:<%= settings.email %>" class="text-secondary text-decoration-none small"><%= settings.email %></a></div>
+                    </div>
+                    <div class="bc-contact-row">
+                        <div class="bc-contact-icon"><i class="material-icons-round">phone</i></div>
+                        <div><h6 class="fw-bold mb-1">Phone Number</h6><a href="tel:<%= settings.phone.replace(/\s+/g, '') %>" class="text-secondary text-decoration-none small"><%= settings.phone %></a></div>
+                    </div>
+                    <div class="bc-contact-row bc-contact-row-last">
+                        <div class="bc-contact-icon"><i class="material-icons-round">language</i></div>
+                        <div><h6 class="fw-bold mb-1">Website</h6><a href="http://<%= settings.website.replace(/^https?:\/\//, '') %>" target="_blank" rel="noopener noreferrer" class="text-secondary text-decoration-none small"><%= settings.website %></a></div>
+                    </div>
+                </div>
+
+                <% if (data.showBusinessHours && data.businessHours) { %>
+                <div class="bc-contact-card mb-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="bc-contact-icon"><i class="material-icons-round">schedule</i></div>
+                        <h6 class="fw-bold mb-0">Business Hours</h6>
+                    </div>
+                    <ul class="list-unstyled mb-0">
+                        <% (data.businessHours.rows || []).forEach(function (row) { %>
+                            <li class="d-flex justify-content-between align-items-center py-2 border-bottom bc-hours-row">
+                                <span class="small fw-medium"><%= row.day %></span>
+                                <span class="small text-secondary"><%= row.hours %></span>
+                            </li>
+                        <% }); %>
+                    </ul>
+                    <% if (data.businessHours.note) { %>
+                        <div class="bc-hours-note">
+                            <i class="material-icons-round">info</i>
+                            <p><%= data.businessHours.note %></p>
+                        </div>
+                    <% } %>
+                </div>
+                <% } %>
+
+                <div class="d-flex gap-3">
+                    <a href="<%= settings.socialLinks.linkedin || '#' %>" class="btn bc-btn-outline-primary flex-fill" aria-label="LinkedIn"><i class="fab fa-linkedin-in me-2"></i>LinkedIn</a>
+                    <a href="<%= settings.socialLinks.facebook || '#' %>" class="btn bc-btn-outline-primary flex-fill" aria-label="Facebook"><i class="fab fa-facebook-f me-2"></i>Facebook</a>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<% if (data.showMapPlaceholder || currentSlug === 'contact') { %>
+<section class="bc-section bc-section-dark">
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <span class="bc-section-label">Find Us</span>
+            <h2 class="bc-section-title text-white mb-0"><%= data.mapHeading || settings.mapHeading || 'Our Office Location' %></h2>
+        </div>
+        <div class="bc-contact-map-embed wow fadeInUp" data-wow-delay="0.2s">
+            <iframe title="<%= data.mapHeading || settings.mapHeading || 'Our Office Location' %>" src="https://www.google.com/maps?q=<%= encodeURIComponent(settings.mapQuery || settings.address) %>&output=embed" width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="bc-contact-map-card">
+                <span><i class="material-icons-round">location_on</i></span>
+                <div><b><%= settings.companyName %> <%= settings.companySub %></b><small><%= settings.address %></small></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(settings.mapQuery || settings.address) %>" target="_blank" rel="noopener noreferrer">Directions <i class="material-icons-round">north_east</i></a>
+            </div>
+        </div>
+    </div>
+</section>
+<% } %>

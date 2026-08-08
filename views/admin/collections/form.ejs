@@ -1,0 +1,73 @@
+<form method="POST" action="<%= isNew ? `/admin/collections/${type}` : `/admin/collections/${type}/${item._id}?_method=PUT` %>">
+    <div class="admin-card">
+        <% config.fields.forEach(function (field) { %>
+            <div class="mb-3">
+                <label class="form-label small fw-medium"><%= field.label %><% if (field.required) { %> <span class="text-danger">*</span><% } %></label>
+
+                <% if (field.type === 'textarea' || field.type === 'lines') { %>
+                    <textarea name="<%= field.name %>" class="form-control" rows="<%= field.type === 'lines' ? 5 : 3 %>" <%= field.required ? 'required' : '' %>><%= item[field.name] || '' %></textarea>
+
+                <% } else if (field.type === 'checkbox') { %>
+                    <div class="form-check">
+                        <input type="checkbox" name="<%= field.name %>" class="form-check-input" id="field-<%= field.name %>" <%= (isNew ? true : item[field.name]) ? 'checked' : '' %>>
+                        <label class="form-check-label small" for="field-<%= field.name %>">Enabled</label>
+                    </div>
+
+                <% } else if (field.type === 'select') { %>
+                    <select name="<%= field.name %>" class="form-select" <%= field.required ? 'required' : '' %>>
+                        <% field.options.forEach(function (opt) { %>
+                            <option value="<%= opt.value %>" <%= item[field.name] === opt.value ? 'selected' : '' %>><%= opt.label %></option>
+                        <% }); %>
+                    </select>
+
+                <% } else if (field.type === 'media') { %>
+                    <div class="input-group">
+                        <input type="text" name="<%= field.name %>" class="form-control" value="<%= item[field.name] || '' %>" placeholder="/uploads/filename.jpg">
+                        <a href="/admin/media" target="_blank" class="btn btn-outline-secondary">Browse Library</a>
+                    </div>
+
+                <% } else if (field.type === 'bulletGroups') { %>
+                    <div id="bulletGroups-repeater" data-repeater="bulletGroups">
+                        <template>
+                            <div class="repeater-item">
+                                <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+                                <div class="mb-2">
+                                    <label class="form-label small">Subheading (optional)</label>
+                                    <input type="text" name="bulletGroups[0][subheading]" class="form-control form-control-sm">
+                                </div>
+                                <div>
+                                    <label class="form-label small">Items (one per line)</label>
+                                    <textarea name="bulletGroups[0][itemsLines]" class="form-control form-control-sm" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </template>
+                        <% (item.bulletGroups || []).forEach(function (group, i) { %>
+                            <div class="repeater-item">
+                                <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+                                <div class="mb-2">
+                                    <label class="form-label small">Subheading (optional)</label>
+                                    <input type="text" name="bulletGroups[<%= i %>][subheading]" class="form-control form-control-sm" value="<%= group.subheading || '' %>">
+                                </div>
+                                <div>
+                                    <label class="form-label small">Items (one per line)</label>
+                                    <textarea name="bulletGroups[<%= i %>][itemsLines]" class="form-control form-control-sm" rows="3"><%= group.itemsLines || '' %></textarea>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary mt-2" data-repeater-add="bulletGroups-repeater">
+                        <i class="material-icons-round align-middle" style="font-size:1rem;">add</i> Add Bullet Group
+                    </button>
+
+                <% } else { %>
+                    <input type="<%= field.type === 'number' ? 'number' : 'text' %>" name="<%= field.name %>" class="form-control" value="<%= item[field.name] !== undefined ? item[field.name] : '' %>" <%= field.required ? 'required' : '' %>>
+                <% } %>
+            </div>
+        <% }); %>
+
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn bc-btn-primary">Save <%= config.label %></button>
+            <a href="/admin/collections/<%= type %>" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </div>
+</form>

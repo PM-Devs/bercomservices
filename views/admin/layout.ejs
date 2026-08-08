@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title><%= typeof title !== 'undefined' ? title + ' — BerCom Admin' : 'BerCom Admin' %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/motion.css" rel="stylesheet">
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body class="admin-body">
+<% if (typeof currentAdminEmail !== 'undefined' && currentAdminEmail) { %>
+<div class="admin-shell">
+    <%- include('partials/sidebar') %>
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <button class="btn btn-sm btn-outline-secondary d-md-none" id="adminSidebarToggle" type="button">
+                <i class="material-icons-round align-middle">menu</i>
+            </button>
+            <h5 class="mb-0"><%= typeof title !== 'undefined' ? title : '' %></h5>
+            <form action="/admin/logout" method="POST" class="mb-0">
+                <button class="btn btn-sm btn-outline-secondary" type="submit">
+                    <i class="material-icons-round align-middle" style="font-size:1rem;">logout</i> Logout
+                </button>
+            </form>
+        </div>
+        <div class="admin-content">
+            <% (successMessages || []).forEach(function (msg) { %>
+                <div class="alert alert-success admin-flash"><%= msg %></div>
+            <% }); %>
+            <% (errorMessages || []).forEach(function (msg) { %>
+                <div class="alert alert-danger admin-flash"><%= msg %></div>
+            <% }); %>
+            <%- body %>
+        </div>
+    </div>
+</div>
+<% } else { %>
+    <%- body %>
+<% } %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+<script src="/js/admin.js"></script>
+<script src="/js/motion.js"></script>
+</body>
+</html>

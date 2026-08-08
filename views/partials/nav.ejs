@@ -1,0 +1,23 @@
+<header class="site-nav" id="mainNav">
+    <a class="site-brand" href="/" aria-label="BerCom Services home">
+        <span class="site-brand-mark"><i class="fas fa-globe-africa"></i></span>
+        <span><b><%= settings.companyName %></b><small><%= settings.companySub %></small></span>
+    </a>
+    <button class="navbar-toggler site-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+    <nav class="collapse navbar-collapse site-links" id="navbarNav" aria-label="Main navigation">
+        <ul>
+            <% settings.nav.filter(function(item){ return !['references','contact'].includes(item.label.toLowerCase()); }).forEach(function (item) { %>
+                <% var href = item.targetSlug ? anchorHref(currentSlug, item.targetSlug, item.anchorId) : (item.href || '#'); %>
+                <% var isActive = item.targetSlug === currentSlug; %>
+                <% if (item.targetSlug === 'services' && typeof services !== 'undefined' && services.length) { %>
+                    <li class="dropdown"><a class="dropdown-toggle<%= isActive ? ' active' : '' %>" href="<%= href %>" data-bs-toggle="dropdown"><%= item.label %></a>
+                        <ul class="dropdown-menu">
+                            <% services.forEach(function (svc) { %><li><a class="dropdown-item" href="<%= anchorHref(currentSlug, 'services', svc.slug) %>"><%= svc.title %></a></li><% }); %>
+                        </ul>
+                    </li>
+                <% } else { %><li><a class="<%= isActive ? 'active' : '' %>" href="<%= href %>"><%= item.label %></a></li><% } %>
+            <% }); %>
+        </ul>
+    </nav>
+    <a class="site-contact" href="/contact">Contact us <i class="fas fa-arrow-right"></i></a>
+</header>

@@ -1,0 +1,34 @@
+<section class="bc-section <%= data.sectionBg || 'bc-section-light' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <h2 class="bc-section-title"><%= data.title %></h2>
+            <% if (data.intro) { %><p class="text-secondary bc-max-650 mx-auto mb-0"><%= data.intro %></p><% } %>
+        </div>
+        <div class="row g-4">
+            <% var cols = 12 / (data.columns || 4); %>
+            <% (data.cards || []).forEach(function (card, i) { %>
+                <div class="col-md-6 col-lg-<%= cols %> wow fadeInUp" data-wow-delay="<%= (0.1 + i * 0.1).toFixed(1) %>s">
+                    <% if (card.photo) { %>
+                        <div class="bc-value-card bc-value-card-photo h-100 p-0">
+                            <div class="bc-value-card-photo-wrap">
+                                <img src="<%= card.photo %>" alt="<%= card.title %>" class="bc-value-card-photo-img">
+                                <div class="bc-value-icon bc-value-icon-badge"><i class="material-icons-round"><%= card.icon %></i></div>
+                            </div>
+                            <div class="bc-value-card-photo-body">
+                                <h5 class="fw-bold mb-2"><%= card.title %></h5>
+                                <p class="text-secondary small mb-0"><%= card.text %></p>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="bc-value-card h-100">
+                            <div class="bc-value-icon"><i class="material-icons-round"><%= card.icon %></i></div>
+                            <h5 class="fw-bold mb-2"><%= card.title %></h5>
+                            <p class="text-secondary small mb-0"><%= card.text %></p>
+                        </div>
+                    <% } %>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,10 @@
+<div <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <% if (data.heading) { %><h6 class="fw-bold mb-3"><%= data.heading %></h6><% } %>
+    <div class="row g-2">
+        <% (data.chips || []).forEach(function (chip) { %>
+            <div class="col-6 col-md-4">
+                <div class="bc-hse-tag"><%= chip %></div>
+            </div>
+        <% }); %>
+    </div>
+</div>

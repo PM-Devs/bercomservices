@@ -1,0 +1,98 @@
+<section class="bc-section bc-section-dark" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <h2 class="bc-section-title text-white"><%= data.title %></h2>
+            <% if (data.intro) { %><p class="bc-text-muted-white bc-max-650 mx-auto mb-0"><%= data.intro %></p><% } %>
+        </div>
+
+        <form class="bc-form bc-enroll-form mx-auto" method="POST" action="/courses/enroll" novalidate>
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label for="enrollName" class="form-label fw-medium small">Full Name <span class="text-danger">*</span></label>
+                    <input type="text" id="enrollName" name="enrollName" class="form-control" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="enrollCompany" class="form-label fw-medium small">Company <span class="text-danger">*</span></label>
+                    <input type="text" id="enrollCompany" name="enrollCompany" class="form-control" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="enrollEmail" class="form-label fw-medium small">Email Address <span class="text-danger">*</span></label>
+                    <input type="email" id="enrollEmail" name="enrollEmail" class="form-control" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="enrollPhone" class="form-label fw-medium small">Phone Number</label>
+                    <input type="tel" id="enrollPhone" name="enrollPhone" class="form-control">
+                </div>
+                <div class="col-sm-6">
+                    <label for="enrollTitle" class="form-label fw-medium small">Job Title</label>
+                    <input type="text" id="enrollTitle" name="enrollTitle" class="form-control">
+                </div>
+                <div class="col-sm-6">
+                    <label for="enrollParticipants" class="form-label fw-medium small">Number of Participants <span class="text-danger">*</span></label>
+                    <input type="number" min="1" id="enrollParticipants" name="enrollParticipants" class="form-control" required>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-medium small">Course(s) <span class="text-danger">*</span></label>
+                    <div class="bc-multiselect" id="courseDropdown">
+                        <button type="button" class="bc-multiselect-btn" id="courseDropBtn" aria-expanded="false">
+                            <span class="bc-multiselect-label" id="courseDropLabel">Select course(s)&hellip;</span>
+                            <i class="material-icons-round bc-multiselect-arrow">expand_more</i>
+                        </button>
+                        <div class="bc-multiselect-menu" id="courseDropMenu">
+                            <p class="bc-ms-group">ISO Management System Courses</p>
+                            <% courses.filter(c => c.category === 'iso-lead-auditor').forEach(function (c) { %>
+                                <label class="bc-ms-item">
+                                    <input type="checkbox" name="courses" value="<%= c.slug %>">
+                                    <%= c.title %>
+                                </label>
+                            <% }); %>
+                            <p class="bc-ms-group">HSE Safety Courses</p>
+                            <% courses.filter(c => c.category === 'hse-safety').forEach(function (c) { %>
+                                <label class="bc-ms-item">
+                                    <input type="checkbox" name="courses" value="<%= c.slug %>">
+                                    <%= c.title %>
+                                </label>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-medium small">Preferred Delivery Mode</label>
+                    <div class="bc-delivery-group">
+                        <% var deliveryModes = (data.deliveryModes && data.deliveryModes.length) ? data.deliveryModes : [
+                            { value: 'open', label: 'Open Enrolment', sub: 'Join a scheduled public session', icon: 'groups' },
+                            { value: 'inhouse', label: 'In-House', sub: 'Delivered at your facility', icon: 'business' },
+                            { value: 'onsite', label: 'On-Site Offshore', sub: 'Delivered at an offshore location', icon: 'directions_boat' }
+                        ]; %>
+                        <% deliveryModes.forEach(function (mode, i) { %>
+                            <input type="radio" class="btn-check" name="deliveryMode" id="delivery-<%= mode.value %>" value="<%= mode.value %>" <%= i === 0 ? 'checked' : '' %>>
+                            <label class="bc-delivery-btn" for="delivery-<%= mode.value %>">
+                                <i class="material-icons-round"><%= mode.icon %></i>
+                                <span class="bc-delivery-name"><%= mode.label %></span>
+                                <span class="bc-delivery-sub"><%= mode.sub %></span>
+                            </label>
+                        <% }); %>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="enrollDate" class="form-label fw-medium small">Preferred Start Date</label>
+                    <input type="date" id="enrollDate" name="enrollDate" class="form-control">
+                </div>
+                <div class="col-12">
+                    <label for="enrollNotes" class="form-label fw-medium small">Additional Notes</label>
+                    <textarea id="enrollNotes" name="enrollNotes" class="form-control" rows="4"></textarea>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn bc-btn-primary btn-lg w-100">
+                        <i class="material-icons-round me-2 bc-send-icon align-middle">send</i>Submit Enrolment
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

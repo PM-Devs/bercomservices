@@ -1,0 +1,20 @@
+<section class="bc-section <%= data.sectionBg || 'bc-section-white' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <h2 class="bc-section-title"><%= data.title %></h2>
+            <% if (data.intro) { %><p class="text-secondary bc-max-650 mx-auto mb-0"><%= data.intro %></p><% } %>
+        </div>
+        <div class="row g-3">
+            <% isoStandards.forEach(function (std, i) { %>
+                <div class="col-6 col-md-<%= (data.layout === 'row') ? 2 : 4 %> wow fadeInUp" data-wow-delay="<%= (0.1 + i * 0.1).toFixed(1) %>s">
+                    <div class="bc-iso-card h-100">
+                        <i class="material-icons-round text-primary d-block mb-2"><%= std.icon %></i>
+                        <h6 class="fw-bold mb-0"><%= std.code %></h6>
+                        <span class="bc-iso-sub text-secondary"><%= std.sublabel %></span>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</section>

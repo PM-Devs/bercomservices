@@ -1,0 +1,79 @@
+<section class="bc-section <%= data.sectionBg || 'bc-section-white' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <% if (data.centeredIntro && data.centeredIntro.title) { %>
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width:680px; margin-left:auto; margin-right:auto;">
+            <% if (data.centeredIntro.label) { %><span class="bc-section-label"><%= data.centeredIntro.label %></span><% } %>
+            <h2 class="bc-section-title"><%= data.centeredIntro.title %></h2>
+            <% if (data.centeredIntro.text) { %><p class="text-secondary mb-0"><%= data.centeredIntro.text %></p><% } %>
+        </div>
+        <% } %>
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
+                <div class="bc-about-img-wrap">
+                    <img src="<%= data.image && data.image.main %>" alt="<%= data.title %>" class="bc-about-main">
+                    <% if (data.image && data.image.badgeYear) { %>
+                        <div class="bc-about-badge">
+                            <h3 class="fw-bold mb-0"><%= data.image.badgeYear %></h3>
+                            <span class="small"><%= data.image.badgeCaption %></span>
+                        </div>
+                    <% } %>
+                    <% if (data.image && data.image.thumb) { %>
+                        <div class="bc-about-thumb" style="display:block;">
+                            <img src="<%= data.image.thumb %>" alt="" class="w-100">
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
+                <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+                <h2 class="bc-section-title"><%= data.title %></h2>
+                <% (data.paragraphs || []).forEach(function (p) { %>
+                    <p class="text-secondary"><%= p %></p>
+                <% }); %>
+
+                <% if (data.featureCards && data.featureCards.length) { %>
+                <div class="row g-3 mt-2 mb-3">
+                    <% data.featureCards.forEach(function (card) { %>
+                        <div class="col-sm-6">
+                            <div class="bc-feature-card">
+                                <div class="bc-feature-icon"><i class="material-icons-round"><%= card.icon %></i></div>
+                                <div>
+                                    <h6 class="fw-bold mb-1"><%= card.title %></h6>
+                                    <p class="small text-secondary mb-0"><%= card.text %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+                <% } %>
+
+                <% if (data.missionVisionBox && data.missionVisionBox.items) { %>
+                <div class="row g-3 mb-3">
+                    <% data.missionVisionBox.items.forEach(function (item) { %>
+                        <div class="col-sm-6">
+                            <div class="bc-mission-box">
+                                <span class="bc-mission-label"><%= item.label %></span>
+                                <p class="small text-secondary mb-0"><%= item.text %></p>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+                <% } %>
+
+                <% if (data.checklist && data.checklist.length) { %>
+                <div class="row g-2 bc-checklist mb-3">
+                    <% data.checklist.forEach(function (item) { %>
+                        <div class="col-sm-6 bc-checklist-item">
+                            <i class="material-icons-round">check_circle</i><%= item %>
+                        </div>
+                    <% }); %>
+                </div>
+                <% } %>
+
+                <% if (data.cta && data.cta.label) { %>
+                    <a href="<%= data.cta.href %>" class="btn bc-btn-primary px-4 mt-2"><%= data.cta.label %></a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>

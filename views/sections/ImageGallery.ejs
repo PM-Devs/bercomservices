@@ -1,0 +1,37 @@
+<% var images = data.images || []; %>
+<section class="bc-section <%= data.sectionBg || 'bc-section-white' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <% if (data.label || data.title) { %>
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <% if (data.title) { %><h2 class="bc-section-title"><%= data.title %></h2><% } %>
+            <% if (data.intro) { %><p class="text-secondary bc-max-650 mx-auto mb-0"><%= data.intro %></p><% } %>
+        </div>
+        <% } %>
+
+        <% if ((data.layout || 'grid') === 'carousel') { %>
+        <div class="bc-gallery-carousel owl-carousel">
+            <% images.forEach(function (img) { %>
+                <div class="bc-gallery-slide">
+                    <img src="<%= img.url %>" alt="<%= img.alt || '' %>" class="bc-gallery-slide-img">
+                    <% if (img.caption) { %><div class="bc-gallery-slide-caption"><%= img.caption %></div><% } %>
+                </div>
+            <% }); %>
+        </div>
+        <% } else { %>
+        <div class="row g-3">
+            <% images.forEach(function (img, i) { %>
+                <div class="col-6 col-md-4 col-lg-3 wow fadeInUp" data-wow-delay="<%= (0.1 + (i % 4) * 0.1).toFixed(1) %>s">
+                    <div class="bc-gallery-item" data-img="<%= img.url %>" data-caption="<%= img.caption || '' %>">
+                        <img src="<%= img.url %>" alt="<%= img.alt || '' %>" class="bc-gallery-img" loading="lazy">
+                        <div class="bc-gallery-overlay">
+                            <i class="material-icons-round">zoom_in</i>
+                            <% if (img.caption) { %><span class="bc-gallery-caption"><%= img.caption %></span><% } %>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <% } %>
+    </div>
+</section>

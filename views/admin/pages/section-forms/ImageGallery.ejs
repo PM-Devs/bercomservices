@@ -1,0 +1,65 @@
+<% var d = section.data || {}; var images = d.images || []; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Layout</label>
+        <select name="layout" class="form-select">
+            <option value="grid" <%= (!d.layout || d.layout === 'grid') ? 'selected' : '' %>>Grid (click to enlarge)</option>
+            <option value="carousel" <%= d.layout === 'carousel' ? 'selected' : '' %>>Full-width Sliding Carousel</option>
+        </select>
+    </div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro (optional)</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+        </select>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Images</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="img-repeater">
+        <i class="material-icons-round align-middle" style="font-size:1rem;">add</i> Add Image
+    </button>
+</div>
+<p class="small text-secondary">Upload photos in the <a href="/admin/media" target="_blank">Media Library</a> first, then paste the URL here (or click "Browse Library").</p>
+<div id="img-repeater">
+    <template>
+        <div class="repeater-item">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label class="form-label small">Image URL</label>
+                    <div class="input-group">
+                        <input type="text" name="imgUrl" class="form-control form-control-sm" placeholder="/uploads/filename.jpg">
+                        <a href="/admin/media" target="_blank" class="btn btn-outline-secondary btn-sm">Browse</a>
+                    </div>
+                </div>
+                <div class="col-md-3"><label class="form-label small">Caption (optional)</label><input type="text" name="imgCaption" class="form-control form-control-sm"></div>
+                <div class="col-md-3"><label class="form-label small">Alt Text</label><input type="text" name="imgAlt" class="form-control form-control-sm"></div>
+            </div>
+        </div>
+    </template>
+    <% images.forEach(function (img) { %>
+        <div class="repeater-item">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label class="form-label small">Image URL</label>
+                    <div class="input-group">
+                        <input type="text" name="imgUrl" class="form-control form-control-sm" value="<%= img.url %>" placeholder="/uploads/filename.jpg">
+                        <a href="/admin/media" target="_blank" class="btn btn-outline-secondary btn-sm">Browse</a>
+                    </div>
+                </div>
+                <div class="col-md-3"><label class="form-label small">Caption (optional)</label><input type="text" name="imgCaption" class="form-control form-control-sm" value="<%= img.caption %>"></div>
+                <div class="col-md-3"><label class="form-label small">Alt Text</label><input type="text" name="imgAlt" class="form-control form-control-sm" value="<%= img.alt %>"></div>
+            </div>
+            <% if (img.url) { %><img src="<%= img.url %>" class="mt-2" style="height:60px;border-radius:6px;"><% } %>
+        </div>
+    <% }); %>
+</div>
+
+<%- include('_bottom', { page, section }) %>

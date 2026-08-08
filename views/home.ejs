@@ -1,0 +1,223 @@
+<%
+var heroSection = sections.find(function(s){ return s.kind === 'HeroCarousel'; });
+var statsSection = sections.find(function(s){ return s.kind === 'StatsStrip'; });
+var aboutSection = sections.find(function(s){ return s.kind === 'TextWithImage'; });
+var gallerySection = sections.find(function(s){ return s.kind === 'ImageGallery'; });
+var serviceSection = sections.find(function(s){ return s.kind === 'ServiceCardGrid'; });
+var specialistSection = sections.find(function(s){ return s.kind === 'FeatureBlocksWithStats'; });
+var isoSection = sections.find(function(s){ return s.kind === 'IsoCardGrid'; });
+var tagsSection = sections.find(function(s){ return s.kind === 'TagChipList'; });
+var clientSection = sections.find(function(s){ return s.kind === 'ClientCardGrid'; });
+var contactSection = sections.find(function(s){ return s.kind === 'ContactSection'; });
+var heroData = heroSection ? heroSection.data : {};
+var heroSlide = (heroData.slides && heroData.slides[0]) || {};
+var legacyHeroImages = { 'bc-hero-slide-1':'/img/carousel-1.jpg', 'bc-hero-slide-2':'/img/header-1.jpg', 'bc-hero-slide-3':'/img/header-2.jpg' };
+var heroImage = heroSlide.bgImage || legacyHeroImages[heroSlide.bgImageClass] || '/img/carousel-1.jpg';
+var aboutData = aboutSection ? aboutSection.data : {};
+var galleryData = gallerySection ? gallerySection.data : {};
+var serviceData = serviceSection ? serviceSection.data : {};
+var specialistData = specialistSection ? specialistSection.data : {};
+var isoData = isoSection ? isoSection.data : {};
+var clientData = clientSection ? clientSection.data : {};
+var contactData = contactSection ? contactSection.data : {};
+%>
+<div class="home-shell">
+    <header class="home-nav">
+        <a class="home-brand" href="/" aria-label="BerCom Services home">
+            <span class="home-brand-mark"><i class="fas fa-globe-africa"></i></span>
+            <span><b><%= settings.companyName %></b><small><%= settings.companySub %></small></span>
+        </a>
+        <button class="home-menu" type="button" aria-label="Open menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        <nav class="home-links" aria-label="Main navigation">
+            <a class="active" href="/">Home</a>
+            <a href="/services">Services <i class="fas fa-chevron-down"></i></a>
+            <a href="/about">About</a>
+            <a href="/projects">Projects</a>
+            <a href="/gallery">Gallery</a>
+            <a href="/team">Team</a>
+            <a href="/testimonials">Testimonials</a>
+        </nav>
+        <a class="home-call" href="/contact">Contact us <i class="fas fa-arrow-right"></i></a>
+    </header>
+
+    <main>
+        <section class="home-hero">
+            <img src="<%= heroImage %>" alt="<%= heroSlide.title || 'BerCom offshore operations team' %>">
+            <div class="home-hero-shade"></div>
+            <div class="home-hero-copy">
+                <span><%= heroSlide.badge || settings.tagline %></span>
+                <h1><%= heroSlide.title || 'Driving Excellence in Oil & Gas Services' %></h1>
+                <p><%= heroSlide.subtitle || settings.footer.blurb %></p>
+                <a class="home-white-btn" href="<%= (heroSlide.ctaPrimary && heroSlide.ctaPrimary.href) || '/services' %>"><%= (heroSlide.ctaPrimary && heroSlide.ctaPrimary.label) || 'Explore our services' %> <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="home-service-pills" aria-label="Core services">
+                <% services.slice(0, 6).forEach(function (service) { %>
+                    <a href="/services#<%= service.slug %>"><i class="material-icons-round"><%= service.icon %></i><%= service.title.replace(/&.*/, '').split(' ').slice(0, 2).join(' ') %></a>
+                <% }); %>
+            </div>
+
+            <aside class="home-request">
+                <span>Start a conversation</span>
+                <h2><%= heroData.quickFormTitle || 'Send a Request' %></h2>
+                <form method="POST" action="/contact">
+                    <label>Full name<input type="text" name="fullName" placeholder="John Doe"></label>
+                    <label>Email address<input type="email" name="email" placeholder="john@company.com"></label>
+                    <label>How can we help?<textarea name="message" rows="2" placeholder="Tell us what you need..."></textarea></label>
+                    <button type="submit">Submit request <i class="fas fa-arrow-right"></i></button>
+                </form>
+            </aside>
+        </section>
+
+        <section class="home-trust" aria-label="Company credentials">
+            <% ((statsSection && statsSection.data.items) || []).forEach(function(item){ %><span><b><%= item.value %></b><%= item.label %></span><% }); %>
+            <span><i class="fas fa-shield-alt"></i> ISO-aligned</span>
+        </section>
+
+        <section class="home-about" id="about">
+            <div class="home-about-copy">
+                <span class="home-kicker"><%= aboutData.label || 'About us' %></span>
+                <h2><%= aboutData.title || 'Your Indigenous Partner in Oil & Gas Excellence' %></h2>
+            </div>
+            <p><%= (aboutData.paragraphs && aboutData.paragraphs.join(' ')) || settings.footer.blurb %></p>
+            <div class="home-duo">
+                <figure><img src="<%= (aboutData.image && aboutData.image.main) || '/img/about-1.jpg' %>" alt="<%= aboutData.title || 'BerCom team at work' %>"></figure>
+                <figure><img src="<%= (aboutData.image && aboutData.image.thumb) || '/img/about-2.jpg' %>" alt="BerCom industrial operations"></figure>
+                <a href="<%= (aboutData.cta && aboutData.cta.href) || '/about' %>"><%= (aboutData.cta && aboutData.cta.label) || 'Discover BerCom' %> <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <% if (aboutData.featureCards && aboutData.featureCards.length) { %><div class="home-about-features"><% aboutData.featureCards.forEach(function(card){ %><article><i class="material-icons-round"><%= card.icon %></i><div><b><%= card.title %></b><span><%= card.text %></span></div></article><% }); %></div><% } %>
+            <% if (aboutData.missionVisionBox && aboutData.missionVisionBox.items) { %><div class="home-mission"><% aboutData.missionVisionBox.items.forEach(function(item){ %><article><span><%= item.label %></span><p><%= item.text %></p></article><% }); %></div><% } %>
+        </section>
+
+        <% if (galleryData.images && galleryData.images.length) { %>
+        <section class="home-visual-story">
+            <div class="home-section-head">
+                <div><span class="home-kicker"><%= galleryData.label || 'In the field' %></span><h2><%= galleryData.title || 'The Work, Up Close' %></h2></div>
+                <p><%= galleryData.intro || '' %></p>
+            </div>
+            <div class="home-image-grid">
+                <% galleryData.images.slice(0,6).forEach(function(image, index){ %><figure class="image-<%= index + 1 %>"><img src="<%= image.url %>" alt="<%= image.alt || image.caption || '' %>" loading="lazy"><figcaption><%= image.caption || '' %></figcaption></figure><% }); %>
+            </div>
+            <a class="home-gallery-link" href="/gallery">Explore the full gallery <i class="fas fa-arrow-right"></i></a>
+        </section>
+        <% } %>
+
+        <section class="home-services" id="services">
+            <div class="home-section-head">
+                <div><span class="home-kicker"><%= serviceData.label || 'What we do' %></span><h2><%= serviceData.title || 'Comprehensive Oil & Gas Services' %></h2></div>
+                <p><%= serviceData.intro || '' %></p>
+            </div>
+            <div class="home-service-feature">
+                <div class="home-service-photo"><img src="<%= (services[0] && services[0].photo) || '/img/header-1.jpg' %>" alt="Offshore support vessel"><span>Since<br><b><%= settings.foundingYear %></b></span></div>
+                <div class="home-service-list">
+                    <h3>Complete support, from shore to site.</h3>
+                    <div>
+                        <% services.slice(0, 8).forEach(function (service, index) { %>
+                            <a href="/services#<%= service.slug %>"><span><%= String(index + 1).padStart(2, '0') %></span><%= service.title %><i class="fas fa-arrow-up"></i></a>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-specialist">
+                <div class="home-specialist-image"><img src="<%= specialistData.photo || '/img/industrial-1.jpg' %>" alt="<%= specialistData.title || 'Industrial catalyst handling' %>"></div>
+            <div class="home-specialist-copy">
+                <span class="home-kicker"><%= specialistData.label || 'Specialised capability' %></span>
+                <h2><%= specialistData.title || 'Catalyst Handling & Mechanical Services' %></h2>
+                <p><%= specialistData.intro || '' %></p>
+                <% if (specialistData.featureBlocks && specialistData.featureBlocks.length) { %><div class="home-specialist-blocks"><% specialistData.featureBlocks.forEach(function(block){ %><details><summary><%= block.title %></summary><p><%= block.text %></p><% if(block.bullets && block.bullets.length){ %><ul><% block.bullets.forEach(function(bullet){ %><li><%= bullet %></li><% }); %></ul><% } %></details><% }); %></div><% } %>
+                <div class="home-facts"><% (specialistData.statTiles || []).slice(0,3).forEach(function(tile){ %><span><b><%= tile.value %></b><%= tile.label %></span><% }); %></div>
+                <a class="home-white-btn" href="<%= (specialistData.cta && specialistData.cta.href) || '/services#catalyst' %>"><%= (specialistData.cta && specialistData.cta.label) || 'Explore specialist services' %> <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <% if (isoSection) { %>
+        <section class="home-compliance" id="qhse">
+            <div class="home-section-head">
+                <div><span class="home-kicker"><%= isoData.label || 'Safety & compliance' %></span><h2><%= isoData.title %></h2></div>
+                <p><%= isoData.intro || '' %></p>
+            </div>
+            <div class="home-iso-grid">
+                <% isoStandards.forEach(function(standard){ %><article><i class="material-icons-round"><%= standard.icon %></i><div><b><%= standard.code %></b><span><%= standard.sublabel %></span></div></article><% }); %>
+            </div>
+            <% if (tagsSection && tagsSection.data.chips) { %><div class="home-training"><b><%= tagsSection.data.heading %></b><div><% tagsSection.data.chips.forEach(function(chip){ %><span><%= chip %></span><% }); %></div></div><% } %>
+        </section>
+        <% } %>
+
+        <section class="home-testimonials">
+            <div class="home-section-head">
+                <div><span class="home-kicker">Client testimonials</span><h2>Trusted where it matters.</h2></div>
+                <p>Long-term partnerships built on safe delivery, clear communication and dependable results.</p>
+            </div>
+            <div class="home-quotes">
+                <% testimonials.slice(0, 3).forEach(function (item, index) { %>
+                <article class="<%= index === 1 ? 'featured' : '' %>">
+                    <i class="fas fa-quote-left"></i>
+                    <p data-read-more data-lines="5">“<%= item.quoteText %>”</p>
+                    <footer><span><%= item.avatarInitials %></span><div><b><%= item.authorName %></b><small><%= item.authorRole %></small></div></footer>
+                </article>
+                <% }); %>
+            </div>
+        </section>
+
+        <section class="home-clients" id="references">
+            <span class="home-kicker"><%= clientData.label || 'Proven track record' %></span>
+            <h2><%= clientData.title || 'Trusted by operators across the region.' %></h2>
+            <% if (clientData.intro) { %><p><%= clientData.intro %></p><% } %>
+            <div class="home-client-row">
+                <% clients.slice(0, 5).forEach(function (client) { %><span><% if (client.logo) { %><img src="<%= client.logo %>" alt="<%= client.name %>"><% } else { %><i class="material-icons-round"><%= client.icon %></i><% } %><b><%= client.name %></b></span><% }); %>
+            </div>
+        </section>
+
+        <section class="home-cta">
+            <img src="/img/banner-img.jpg" alt="BerCom industrial operations">
+            <div><span class="home-kicker"><%= contactData.label || 'Start your next project' %></span><h2><%= contactData.title || 'Ready to move your operation forward?' %></h2><% if (contactData.intro) { %><p><%= contactData.intro %></p><% } %><a class="home-white-btn" href="/contact">Talk to our team <i class="fas fa-arrow-right"></i></a></div>
+        </section>
+
+        <section class="home-location" id="location">
+            <div class="home-location-copy">
+                <span class="home-kicker">Find us in Malabo</span>
+                <h2><%= settings.mapHeading || 'Our Office Location' %></h2>
+                <p><%= settings.mapIntro || 'Visit our team in Malabo or open the location in Google Maps for directions.' %></p>
+                <div class="home-location-details">
+                    <span><i class="material-icons-round">location_on</i><b>Office address</b><small><%= settings.address %></small></span>
+                    <span><i class="material-icons-round">schedule</i><b>Office hours</b><small>Monday–Friday · 08:00–17:00</small></span>
+                </div>
+                <a class="home-map-link" href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(settings.mapQuery || settings.address) %>" target="_blank" rel="noopener noreferrer">Get directions <i class="fas fa-arrow-up"></i></a>
+            </div>
+            <div class="home-map-frame">
+                <iframe title="<%= settings.mapHeading || 'Our Office Location' %>" src="https://www.google.com/maps?q=<%= encodeURIComponent(settings.mapQuery || settings.address) %>&output=embed" width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <span class="home-map-pin"><i class="fas fa-map-marker-alt"></i><b><%= settings.companyName %> <%= settings.companySub %></b></span>
+            </div>
+        </section>
+    </main>
+
+    <%
+    var homeFooterLinks = (settings.footer.quickLinks || []).slice();
+    if (!homeFooterLinks.some(function(link){ return link.href === '/projects'; })) homeFooterLinks.push({ label:'Projects', href:'/projects' });
+    if (!homeFooterLinks.some(function(link){ return link.href === '/gallery'; })) homeFooterLinks.push({ label:'Gallery', href:'/gallery' });
+    %>
+    <footer class="home-footer">
+        <div class="home-footer-main">
+            <div class="home-footer-brand">
+                <div class="home-brand"><span class="home-brand-mark"><i class="fas fa-globe-africa"></i></span><span><b><%= settings.companyName %></b><small><%= settings.companySub %></small></span></div>
+                <p><%= settings.footer.blurb %></p>
+                <div class="home-footer-socials">
+                    <% if (settings.socialLinks.linkedin) { %><a href="<%= settings.socialLinks.linkedin %>" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><% } %>
+                    <% if (settings.socialLinks.facebook) { %><a href="<%= settings.socialLinks.facebook %>" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><% } %>
+                    <% if (settings.socialLinks.twitter) { %><a href="<%= settings.socialLinks.twitter %>" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a><% } %>
+                </div>
+            </div>
+            <div class="home-footer-column"><b>Explore</b><nav><% homeFooterLinks.slice(0,7).forEach(function(link){ %><a href="<%= link.href %>"><%= link.label %></a><% }); %></nav></div>
+            <div class="home-footer-column"><b>Core services</b><nav><% services.slice(0,5).forEach(function(service){ %><a href="/services#<%= service.slug %>"><%= service.title %></a><% }); %></nav></div>
+            <div class="home-footer-contact">
+                <span>Talk to our operations team</span>
+                <a class="home-footer-email" href="mailto:<%= settings.email %>"><%= settings.email %> <i class="fas fa-arrow-right"></i></a>
+                <a href="tel:<%= settings.phone.replace(/\s+/g, '') %>"><i class="fas fa-phone-alt"></i><%= settings.phone %></a>
+                <a href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(settings.mapQuery || settings.address) %>" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-marker-alt"></i><%= settings.address %></a>
+            </div>
+        </div>
+        <div class="home-footer-bottom"><small><%= settings.footer.copyrightText %></small><span><a href="/contact">Contact</a><a href="/gallery">Gallery</a><a href="/projects">Projects</a></span><small><%- settings.footer.developerCredit %></small></div>
+    </footer>
+</div>

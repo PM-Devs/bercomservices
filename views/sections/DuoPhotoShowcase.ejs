@@ -1,0 +1,23 @@
+<section class="bc-section <%= data.sectionBg || 'bc-section-white' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width:720px; margin-left:auto; margin-right:auto;">
+            <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+            <h2 class="bc-section-title"><%= data.title %></h2>
+            <% (data.paragraphs || []).forEach(function (p) { %>
+                <p class="text-secondary"><%= p %></p>
+            <% }); %>
+        </div>
+
+        <div class="bc-duo-photos wow fadeInUp" data-wow-delay="0.2s">
+            <div class="bc-duo-photo">
+                <img src="<%= data.photos && data.photos[0] %>" alt="<%= data.title %>">
+            </div>
+            <div class="bc-duo-photo">
+                <img src="<%= data.photos && data.photos[1] %>" alt="<%= data.title %>">
+            </div>
+            <% if (data.ctaLabel) { %>
+                <a href="<%= data.ctaHref || '#' %>" class="bc-duo-cta"><%= data.ctaLabel %></a>
+            <% } %>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,23 @@
+<div class="bc-tcard h-100">
+    <div class="bc-tcard-stars">
+        <% for (var s = 1; s <= 5; s++) { %>
+            <i class="material-icons-round <%= s <= (t.rating || 5) ? 'bc-star-filled' : 'bc-star-empty' %>">star</i>
+        <% } %>
+    </div>
+    <i class="material-icons-round bc-tcard-quote">format_quote</i>
+    <p class="bc-tcard-text" data-read-more data-lines="5">&ldquo;<%= t.quoteText %>&rdquo;</p>
+    <div class="bc-tcard-author">
+        <% if (t.photo) { %>
+            <img src="<%= t.photo %>" alt="<%= t.authorName %>" class="bc-tcard-avatar-img">
+        <% } else { %>
+            <div class="bc-tcard-avatar"><%= t.avatarInitials %></div>
+        <% } %>
+        <div>
+            <p class="bc-tcard-name"><%= t.authorName %></p>
+            <p class="bc-tcard-role"><%= t.authorRole %></p>
+        </div>
+    </div>
+    <div class="bc-tcard-service">
+        <i class="material-icons-round"><%= t.serviceIcon %></i><%= t.serviceLabel %>
+    </div>
+</div>

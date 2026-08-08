@@ -1,0 +1,35 @@
+<% var d = section.data || {}; var logos = d.logos || []; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-8"><label class="form-label small fw-medium">Label (optional, e.g. "Trusted By")</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+        </select>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Logos (name + icon — keep it simple, this is a minimal text strip)</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="logo-repeater">Add Logo</button>
+</div>
+<div id="logo-repeater">
+    <template>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-4"><label class="form-label small">Icon</label><input type="text" name="logoIcon" class="form-control form-control-sm" placeholder="business"></div>
+            <div class="col-md-8"><label class="form-label small">Name</label><input type="text" name="logoName" class="form-control form-control-sm"></div>
+        </div>
+    </template>
+    <% logos.forEach(function (l) { %>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-4"><label class="form-label small">Icon</label><input type="text" name="logoIcon" class="form-control form-control-sm" value="<%= l.icon %>"></div>
+            <div class="col-md-8"><label class="form-label small">Name</label><input type="text" name="logoName" class="form-control form-control-sm" value="<%= l.name %>"></div>
+        </div>
+    <% }); %>
+</div>
+
+<%- include('_bottom', { page, section }) %>

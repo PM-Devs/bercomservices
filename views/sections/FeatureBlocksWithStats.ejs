@@ -1,0 +1,64 @@
+<section class="bc-section <%= (data.theme === 'light') ? 'bc-section-white' : 'bc-section-dark' %>" <% if (anchorId) { %>id="<%= anchorId %>"<% } %>>
+    <div class="container">
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-7 wow fadeInLeft" data-wow-delay="0.1s">
+                <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+                <h2 class="bc-section-title"><%= data.title %></h2>
+                <% if (data.intro) { %><p class="<%= (data.theme === 'light') ? 'text-secondary' : 'bc-text-muted-white' %> mb-4" data-read-more data-lines="4"><%= data.intro %></p><% } %>
+
+                <div class="bc-capability-accordion mb-4">
+                    <% (data.featureBlocks || []).forEach(function (block, blockIndex) { %>
+                        <details class="bc-capability-panel" <%= blockIndex === 0 ? 'open' : '' %>>
+                            <summary>
+                                <span class="bc-capability-number"><%= String(blockIndex + 1).padStart(2, '0') %></span>
+                                <span><% if (block.icon) { %><i class="material-icons-round"><%= block.icon %></i><% } %><%= block.title %></span>
+                                <i class="material-icons-round bc-capability-toggle">add</i>
+                            </summary>
+                            <div class="bc-capability-content">
+                            <p class="small mb-2 <%= (data.theme === 'light') ? 'text-secondary' : 'bc-text-muted-white-2' %>"><%= block.text %></p>
+                            <% if (block.bullets && block.bullets.length) { %>
+                                <ul class="bc-svc-list <%= (data.theme === 'light') ? '' : 'bc-svc-list-light' %>">
+                                    <% block.bullets.forEach(function (b) { %><li><%= b %></li><% }); %>
+                                </ul>
+                            <% } %>
+                            </div>
+                        </details>
+                    <% }); %>
+                </div>
+
+                <% if (data.cta && data.cta.label) { %>
+                    <a href="<%= data.cta.href %>" class="btn bc-btn-primary px-4"><%= data.cta.label %></a>
+                <% } %>
+            </div>
+
+            <div class="col-lg-5 wow fadeInRight" data-wow-delay="0.2s">
+                <% if (data.photo) { %>
+                    <div class="bc-fbws-photo mb-3">
+                        <img src="<%= data.photo %>" alt="<%= data.title %>">
+                    </div>
+                <% } %>
+                <% if (data.statTiles && data.statTiles.length) { %>
+                <div class="row g-3 mb-3">
+                    <% data.statTiles.forEach(function (tile) { %>
+                        <div class="col-6">
+                            <div class="bc-catalyst-stat">
+                                <i class="material-icons-round text-primary"><%= tile.icon %></i>
+                                <h4 class="fw-bold mt-2 mb-0 <%= (data.theme === 'light') ? '' : 'text-white' %>"><%= tile.value %></h4>
+                                <span class="small <%= (data.theme === 'light') ? 'text-secondary' : 'bc-text-muted-white-3' %>"><%= tile.label %></span>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+                <% } %>
+                <% if (data.keyAdvantages && data.keyAdvantages.title) { %>
+                    <details class="bc-advantages-panel">
+                        <summary><span><i class="material-icons-round">verified</i><%= data.keyAdvantages.title %></span><i class="material-icons-round">expand_more</i></summary>
+                        <ul class="bc-svc-list <%= (data.theme === 'light') ? '' : 'bc-svc-list-light' %> mb-0">
+                            <% (data.keyAdvantages.items || []).forEach(function (item) { %><li><%= item %></li><% }); %>
+                        </ul>
+                    </details>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>

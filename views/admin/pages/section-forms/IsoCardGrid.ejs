@@ -1,0 +1,23 @@
+<% var d = section.data || {}; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Layout</label>
+        <select name="layout" class="form-select">
+            <option value="grid" <%= d.layout !== 'row' ? 'selected' : '' %>>Grid (3-up)</option>
+            <option value="row" <%= d.layout === 'row' ? 'selected' : '' %>>Row (compact, 6-up)</option>
+        </select>
+    </div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+        </select>
+    </div>
+</div>
+<p class="small text-secondary mt-2">Content comes from the ISO Standards collection — manage the actual standards under <a href="/admin/collections/iso-standards">Collections &rarr; ISO Standards</a>.</p>
+
+<%- include('_bottom', { page, section }) %>

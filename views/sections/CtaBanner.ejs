@@ -1,0 +1,24 @@
+<% var hasPhoto = !!data.backgroundPhoto; %>
+<section class="bc-section <%= hasPhoto ? 'bc-cta-photo' : (data.theme === 'dark' ? 'bc-section-dark' : 'bc-section-white') %>"
+    <% if (anchorId) { %>id="<%= anchorId %>"<% } %>
+    <% if (hasPhoto) { %>style="background-image:url('<%= data.backgroundPhoto %>')"<% } %>>
+    <% if (hasPhoto) { %><div class="bc-cta-photo-overlay"></div><% } %>
+    <div class="container position-relative">
+        <div class="row align-items-center g-4 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="col-lg-7">
+                <% if (data.label) { %><span class="bc-section-label"><%= data.label %></span><% } %>
+                <h2 class="bc-section-title <%= (data.theme === 'dark' || hasPhoto) ? 'text-white' : '' %> mb-1"><%= data.title %></h2>
+                <p class="<%= (data.theme === 'dark' || hasPhoto) ? 'bc-text-muted-white' : 'text-secondary' %> mb-0"><%= data.text %></p>
+            </div>
+            <div class="col-lg-5">
+                <div class="d-flex flex-wrap gap-3 justify-content-lg-end">
+                    <% (data.buttons || []).forEach(function (btn, i) { %>
+                        <a href="<%= btn.href %>" class="btn <%= i === 0 ? 'bc-btn-primary' : ((data.theme === 'dark' || hasPhoto) ? 'bc-btn-outline' : 'bc-btn-outline-primary') %> btn-lg px-5">
+                            <% if (btn.icon) { %><i class="material-icons-round me-2 bc-send-icon align-middle"><%= btn.icon %></i><% } %><%= btn.label %>
+                        </a>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,40 @@
+<% var d = section.data || {}; var photos = d.photos || []; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-6"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-12"><label class="form-label small fw-medium">Paragraphs (one per line)</label><textarea name="paragraphsLines" class="form-control" rows="3"><%= (d.paragraphs || []).join('\n') %></textarea></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+        </select>
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-6">
+        <label class="form-label small fw-medium">Photo 1</label>
+        <div class="input-group">
+            <input type="text" name="photo1" class="form-control" value="<%= photos[0] %>" placeholder="/uploads/filename.jpg">
+            <a href="/admin/media" target="_blank" class="btn btn-outline-secondary">Browse</a>
+        </div>
+        <% if (photos[0]) { %><img src="<%= photos[0] %>" class="mt-2" style="height:60px;border-radius:6px;"><% } %>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label small fw-medium">Photo 2</label>
+        <div class="input-group">
+            <input type="text" name="photo2" class="form-control" value="<%= photos[1] %>" placeholder="/uploads/filename.jpg">
+            <a href="/admin/media" target="_blank" class="btn btn-outline-secondary">Browse</a>
+        </div>
+        <% if (photos[1]) { %><img src="<%= photos[1] %>" class="mt-2" style="height:60px;border-radius:6px;"><% } %>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6"><label class="form-label small fw-medium">Floating Button Label</label><input type="text" name="ctaLabel" class="form-control" value="<%= d.ctaLabel %>" placeholder="Explore Services"></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Floating Button Href</label><input type="text" name="ctaHref" class="form-control" value="<%= d.ctaHref %>"></div>
+</div>
+
+<%- include('_bottom', { page, section }) %>

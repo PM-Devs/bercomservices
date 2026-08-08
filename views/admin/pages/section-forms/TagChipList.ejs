@@ -1,0 +1,13 @@
+<% var d = section.data || {}; %>
+<%- include('_top', { page, section }) %>
+
+<div class="mb-3">
+    <label class="form-label small fw-medium">Heading</label>
+    <input type="text" name="heading" class="form-control" value="<%= d.heading %>">
+</div>
+<div class="mb-3">
+    <label class="form-label small fw-medium">Chips (one per line)</label>
+    <textarea name="chipsLines" class="form-control" rows="10"><%= (d.chips || []).join('\n') %></textarea>
+</div>
+
+<%- include('_bottom', { page, section }) %>

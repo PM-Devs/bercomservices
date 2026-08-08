@@ -1,0 +1,528 @@
+/* =====================================================
+   BerCom — Motion & modern-layout enhancements
+   Layered on top of style.css without touching any --bc-* color
+   token defined there — same blue/navy/white palette throughout.
+   ===================================================== */
+
+/* ---------- Typography: bolder, tighter, more confident scale ---------- */
+.bc-section-title {
+    font-size: clamp(2rem, 3.6vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.bc-hero-title {
+    font-size: clamp(2.4rem, 5vw, 3.75rem);
+    letter-spacing: -0.02em;
+}
+.bc-section-label {
+    font-weight: 700;
+    letter-spacing: 2.5px;
+}
+.bc-section { padding: 100px 0; }
+@media (max-width: 991px) { .bc-section { padding: 64px 0; } }
+
+/* ---------- Icon treatment: solid brand color, not soft pastel circles ---------- */
+.bc-svc-icon,
+.bc-value-icon,
+.bc-feature-icon,
+.bc-iso-card .material-icons-round,
+.bc-client-card .material-icons-round {
+    transition: background var(--bc-dur) var(--bc-ease), color var(--bc-dur) var(--bc-ease);
+}
+.bc-svc-icon,
+.bc-value-icon,
+.bc-feature-icon {
+    background: var(--bc-primary) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 16px rgba(21, 101, 192, 0.28);
+}
+
+/* ---------- Cards: always-on depth instead of flat-until-hover ---------- */
+.bc-service-card,
+.bc-value-card,
+.bc-course-card,
+.bc-client-card,
+.bc-tcard {
+    box-shadow: var(--bc-shadow-1);
+}
+.bc-service-card,
+.bc-value-card {
+    border-radius: var(--bc-radius-lg);
+}
+
+/* ---------- "Learn More" link (summary service cards) ---------- */
+.bc-svc-learn-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--bc-primary);
+    text-decoration: none;
+}
+.bc-svc-learn-more .material-icons-round {
+    font-size: 1rem;
+    transition: transform var(--bc-dur) var(--bc-ease);
+}
+.bc-svc-learn-more:hover .material-icons-round { transform: translateX(4px); }
+
+/* ---------- Hero: full-bleed photo with floating chips + quick-request card ---------- */
+.bc-hero-wrap { position: relative; }
+
+.bc-hero-chips {
+    position: absolute;
+    top: 110px;
+    right: 6%;
+    z-index: 4;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 380px;
+    justify-content: flex-end;
+}
+.bc-hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+.bc-hero-chip .material-icons-round { font-size: 1rem; color: #fff; }
+.bc-hero-chip-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--bc-primary-light);
+    flex-shrink: 0;
+}
+
+.bc-hero-quickform {
+    position: absolute;
+    top: 190px;
+    right: 6%;
+    z-index: 4;
+    width: 300px;
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: var(--bc-radius-lg);
+    padding: 22px;
+    box-shadow: var(--bc-shadow-4);
+}
+
+@media (max-width: 1199px) {
+    .bc-hero-chips, .bc-hero-quickform { display: none !important; }
+}
+
+/* Ken Burns slow-zoom on the full-bleed hero photo */
+.bc-hero-carousel .owl-item.active .bc-hero-item {
+    animation: bc-kenburns-bg 14s ease-in-out infinite alternate;
+}
+@keyframes bc-kenburns-bg {
+    from { background-size: 100% auto; }
+    to   { background-size: 114% auto; }
+}
+
+/* ---------- Scroll-reveal stagger (progressive enhancement over WOW.js) ---------- */
+.bc-stagger-item {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s var(--bc-ease), transform 0.6s var(--bc-ease);
+}
+.bc-stagger-item.bc-in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- Logo / client marquee ---------- */
+.bc-marquee {
+    overflow: hidden;
+    position: relative;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.bc-marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 1.5rem;
+    animation: bc-marquee 32s linear infinite;
+}
+.bc-marquee:hover .bc-marquee-track {
+    animation-play-state: paused;
+}
+@keyframes bc-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+.bc-marquee-track .bc-client-card {
+    flex: 0 0 auto;
+    width: 220px;
+}
+
+/* ---------- Feature cards with a photo (instead of icon-only) ---------- */
+.bc-value-card-photo { overflow: hidden; text-align: left; }
+.bc-value-card-photo-wrap { position: relative; height: 170px; overflow: hidden; }
+.bc-value-card-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--bc-ease);
+}
+.bc-value-card-photo:hover .bc-value-card-photo-img { transform: scale(1.08); }
+.bc-value-icon-badge {
+    position: absolute;
+    left: 16px;
+    bottom: -22px;
+    margin: 0;
+    background: #fff;
+    box-shadow: var(--bc-shadow-2);
+    z-index: 2;
+}
+.bc-value-card-photo-body { padding: 32px 20px 20px; }
+
+/* ---------- Card micro-interactions ---------- */
+.bc-service-card,
+.bc-value-card,
+.bc-client-card,
+.bc-course-card,
+.bc-iso-card {
+    will-change: transform;
+}
+.bc-svc-icon,
+.bc-value-icon {
+    transition: transform var(--bc-dur) var(--bc-ease), background var(--bc-dur) var(--bc-ease);
+}
+.bc-service-card:hover .bc-svc-icon,
+.bc-value-card:hover .bc-value-icon {
+    transform: scale(1.1) rotate(-4deg);
+    background: var(--bc-primary);
+    color: #fff;
+}
+
+/* ---------- Image Gallery: grid + click-to-enlarge ---------- */
+.bc-gallery-item {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--bc-radius-lg);
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+    box-shadow: var(--bc-shadow-1);
+}
+.bc-gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s var(--bc-ease);
+}
+.bc-gallery-item:hover .bc-gallery-img { transform: scale(1.08); }
+.bc-gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13, 71, 161, 0.85) 0%, rgba(21, 101, 192, 0.15) 55%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    padding-bottom: 16px;
+    color: #fff;
+    opacity: 0;
+    transition: opacity var(--bc-dur) var(--bc-ease);
+    text-align: center;
+}
+.bc-gallery-item:hover .bc-gallery-overlay { opacity: 1; }
+.bc-gallery-overlay .material-icons-round { font-size: 1.6rem; }
+.bc-gallery-caption { font-size: 0.8rem; font-weight: 500; padding: 0 10px; }
+
+/* ---------- Image Gallery: full-width sliding carousel ---------- */
+.bc-gallery-carousel .bc-gallery-slide {
+    position: relative;
+    border-radius: var(--bc-radius-lg);
+    overflow: hidden;
+    height: 460px;
+}
+.bc-gallery-slide-img { width: 100%; height: 100%; object-fit: cover; }
+.bc-gallery-slide-caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 24px 28px;
+    background: linear-gradient(to top, rgba(13, 71, 161, 0.88), transparent);
+    color: #fff;
+    font-weight: 500;
+}
+.bc-gallery-carousel .owl-nav .owl-prev,
+.bc-gallery-carousel .owl-nav .owl-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-radius: 50% !important;
+    color: var(--bc-primary) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--bc-dur) var(--bc-ease);
+}
+.bc-gallery-carousel .owl-nav .owl-prev { left: 16px; }
+.bc-gallery-carousel .owl-nav .owl-next { right: 16px; }
+.bc-gallery-carousel .owl-nav .owl-prev:hover,
+.bc-gallery-carousel .owl-nav .owl-next:hover { background: var(--bc-primary) !important; color: #fff !important; }
+.bc-gallery-carousel .owl-dots { text-align: center; margin-top: 20px; }
+.bc-gallery-carousel .owl-dot span {
+    width: 9px; height: 9px; margin: 0 4px; display: inline-block;
+    border-radius: 50%; background: rgba(21, 101, 192, 0.25);
+    transition: background var(--bc-dur) var(--bc-ease);
+}
+.bc-gallery-carousel .owl-dot.active span { background: var(--bc-primary); }
+
+/* ---------- Global lightbox (click-to-enlarge target for .bc-gallery-item) ---------- */
+#bc-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(13, 71, 161, 0.15);
+    background-color: rgba(0, 0, 0, 0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+#bc-lightbox.is-open { display: flex; }
+#bc-lightbox img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: var(--bc-radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+#bc-lightbox .bc-lightbox-caption {
+    position: absolute;
+    bottom: 40px;
+    left: 0; right: 0;
+    text-align: center;
+    color: #fff;
+    font-size: 0.95rem;
+}
+#bc-lightbox .bc-lightbox-close {
+    position: absolute;
+    top: 24px; right: 32px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background var(--bc-dur) var(--bc-ease);
+}
+#bc-lightbox .bc-lightbox-close:hover { background: var(--bc-primary); border-color: var(--bc-primary); }
+
+/* ---------- Ken Burns slow-zoom on the hero photo ---------- */
+.bc-hero-carousel .owl-item.active .bc-hero-split-photo img {
+    animation: bc-kenburns 12s ease-in-out infinite alternate;
+}
+@keyframes bc-kenburns {
+    from { transform: scale(1); }
+    to   { transform: scale(1.12); }
+}
+
+/* ---------- Large photo inside FeatureBlocksWithStats (dark "why us" sections) ---------- */
+.bc-fbws-photo {
+    border-radius: var(--bc-radius-lg);
+    overflow: hidden;
+    height: 340px;
+    box-shadow: var(--bc-shadow-3);
+}
+.bc-fbws-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Two-column checklist (TextWithImage) ---------- */
+.bc-checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--bc-text);
+    padding: 6px 0;
+}
+.bc-checklist-item .material-icons-round { color: var(--bc-primary); font-size: 1.15rem; flex-shrink: 0; }
+
+/* ---------- Minimal partner/client logo strip ---------- */
+.bc-logo-strip { padding: 40px 0; }
+.bc-logo-strip-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--bc-muted);
+    margin-bottom: 24px;
+}
+.bc-logo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.bc-logo-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--bc-muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+    opacity: 0.7;
+    transition: opacity var(--bc-dur) var(--bc-ease), color var(--bc-dur) var(--bc-ease);
+}
+.bc-logo-item:hover { opacity: 1; color: var(--bc-primary); }
+.bc-logo-item .material-icons-round { font-size: 1.2rem; }
+
+/* ---------- CTA banner with a real photo background ---------- */
+.bc-cta-photo {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bc-cta-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(125deg, rgba(13, 71, 161, 0.90) 0%, rgba(26, 26, 46, 0.85) 60%, rgba(0, 0, 0, 0.65) 100%);
+}
+
+/* ---------- Duo photo showcase (two large photos + floating CTA between them) ---------- */
+.bc-duo-photos {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+.bc-duo-photo {
+    border-radius: var(--bc-radius-lg);
+    overflow: hidden;
+    height: 380px;
+    box-shadow: var(--bc-shadow-2);
+}
+.bc-duo-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--bc-ease);
+}
+.bc-duo-photo:hover img { transform: scale(1.06); }
+.bc-duo-cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bc-primary);
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: var(--bc-shadow-4);
+    white-space: nowrap;
+    transition: background var(--bc-dur) var(--bc-ease), transform var(--bc-dur) var(--bc-ease);
+}
+.bc-duo-cta:hover { background: var(--bc-primary-dark); color: #fff; transform: translate(-50%, -50%) scale(1.05); }
+
+@media (max-width: 767px) {
+    .bc-duo-photos { grid-template-columns: 1fr; }
+    .bc-duo-photo { height: 240px; }
+    .bc-duo-cta { position: static; transform: none; display: block; text-align: center; margin: 16px auto 0; width: fit-content; }
+}
+
+/* ---------- Testimonial photo avatars (falls back to initials) ---------- */
+.bc-tcard-avatar-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.bc-tcard-stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 4px;
+}
+.bc-tcard-stars .material-icons-round { font-size: 1rem; }
+.bc-tcard-stars .bc-star-filled { color: var(--bc-primary); }
+.bc-tcard-stars .bc-star-empty { color: var(--bc-border); }
+
+/* ---------- Admin: Lottie loading state on "Run Research Now" ---------- */
+.bc-run-btn { position: relative; }
+.bc-run-btn .bc-run-btn-lottie {
+    display: none;
+    width: 60px;
+    height: 20px;
+}
+.bc-run-btn.is-loading .bc-run-btn-label,
+.bc-run-btn.is-loading .bc-run-btn-icon { display: none; }
+.bc-run-btn.is-loading .bc-run-btn-lottie { display: inline-block; }
+.bc-run-btn.is-loading { pointer-events: none; opacity: 0.85; }
+
+/* =====================================================
+   Shared editorial motion system
+   ===================================================== */
+html { scroll-behavior: smooth; }
+body { animation: bc-page-enter .5s cubic-bezier(.22,1,.36,1) both; transition: opacity .18s ease, transform .18s ease; }
+body.bc-page-leaving { opacity: 0; transform: translateY(4px); }
+@keyframes bc-page-enter { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:none; } }
+
+.bc-reading-progress { position:fixed; top:0; left:0; right:0; z-index:9999; height:3px; background:#12b9b1; transform:scaleX(0); transform-origin:left center; transition:transform .08s linear; pointer-events:none; }
+.bc-motion-reveal { opacity:0; transform:translateY(28px); filter:blur(3px); transition:opacity .72s cubic-bezier(.22,1,.36,1) var(--bc-reveal-delay,0ms),transform .72s cubic-bezier(.22,1,.36,1) var(--bc-reveal-delay,0ms),filter .6s ease var(--bc-reveal-delay,0ms); }
+.bc-motion-reveal.bc-motion-visible { opacity:1; transform:none; filter:none; }
+.home-image-grid .bc-motion-reveal:nth-child(even),.home-iso-grid .bc-motion-reveal:nth-child(even) { transform:translateY(28px) scale(.97); }
+.home-image-grid .bc-motion-reveal.bc-motion-visible,.home-iso-grid .bc-motion-reveal.bc-motion-visible { transform:none; }
+
+.home-nav,.site-nav { transition:height .35s cubic-bezier(.22,1,.36,1),background .35s ease,box-shadow .35s ease; }
+.home-nav.bc-nav-scrolled,.site-nav.bc-nav-scrolled { box-shadow:0 12px 35px rgba(8,44,52,.08); }
+.home-links a::before,.site-links>ul>li>a::before { content:""; position:absolute; left:0; right:0; bottom:18px; height:1px; background:#12b9b1; transform:scaleX(0); transform-origin:right; transition:transform .3s cubic-bezier(.22,1,.36,1); }
+.home-links a:hover::before,.site-links>ul>li>a:hover::before { transform:scaleX(1); transform-origin:left; }
+
+.home-hero>img,.home-cta>img { animation:bc-editorial-drift 16s ease-in-out infinite alternate; }
+.site-shell .bc-page-hero { animation:bc-hero-pan 18s ease-in-out infinite alternate; }
+@keyframes bc-editorial-drift { from { transform:scale(1); } to { transform:scale(1.045); } }
+@keyframes bc-hero-pan { from { background-position:48% center; } to { background-position:54% center; } }
+.home-hero-copy h1,.site-shell .bc-page-hero-title { animation:bc-title-rise .8s cubic-bezier(.22,1,.36,1) .12s both; }
+@keyframes bc-title-rise { from { opacity:0; transform:translateY(24px); letter-spacing:-.075em; } to { opacity:1; transform:none; } }
+
+.bc-motion-card { transform:perspective(900px) rotateX(var(--bc-tilt-x,0deg)) rotateY(var(--bc-tilt-y,0deg)) translateY(0); transition:transform .22s ease,border-color .25s ease,box-shadow .25s ease!important; transform-style:preserve-3d; }
+.bc-motion-card:hover { transform:perspective(900px) rotateX(var(--bc-tilt-x,0deg)) rotateY(var(--bc-tilt-y,0deg)) translateY(-5px); }
+.bc-motion-button { transform:translate(var(--bc-move-x,0px),var(--bc-move-y,0px)); transition:transform .2s ease,background .25s ease,color .25s ease,box-shadow .25s ease!important; }
+.bc-motion-button:active { transform:translate(var(--bc-move-x,0px),var(--bc-move-y,0px)) scale(.96); }
+.bc-motion-button i { transition:transform .25s cubic-bezier(.22,1,.36,1); }.bc-motion-button:hover i { transform:translateX(3px); }
+
+.home-image-grid figure::after,.bc-gallery-item::after { content:""; position:absolute; inset:-50% -100%; background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.22) 50%,transparent 58%); transform:translateX(-45%); transition:transform .8s cubic-bezier(.22,1,.36,1); pointer-events:none; }.home-image-grid figure:hover::after,.bc-gallery-item:hover::after { transform:translateX(55%); }
+.home-service-list a { transition:padding .25s ease,color .25s ease,background .25s ease; }.home-service-list a:hover { padding-left:8px;padding-right:8px;color:#087f86;background:#eef8fa; }.home-service-list a:hover i { transform:rotate(45deg) translateY(-3px); }
+.home-specialist-blocks details { transition:background .25s ease,padding .25s ease; }.home-specialist-blocks details[open] { background:rgba(255,255,255,.055);padding-left:10px;padding-right:10px; }.home-specialist-blocks details p,.home-specialist-blocks details ul { animation:bc-detail-open .35s ease both; } @keyframes bc-detail-open { from { opacity:0;transform:translateY(-5px); } to { opacity:1;transform:none; } }
+
+#bc-lightbox { opacity:0; display:flex; visibility:hidden; transition:opacity .28s ease,visibility .28s ease; }.site-shell #bc-lightbox.is-open,#bc-lightbox.is-open { opacity:1;visibility:visible; }.bc-lightbox.is-open img,#bc-lightbox.is-open img { animation:bc-lightbox-in .38s cubic-bezier(.22,1,.36,1) both; } @keyframes bc-lightbox-in { from { opacity:0;transform:scale(.94); } to { opacity:1;transform:none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *,*::before,*::after { animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important; }
+  .bc-motion-reveal,.bc-motion-reveal.bc-motion-visible { opacity:1;transform:none;filter:none; }
+  .bc-reading-progress { display:none; }
+}
+@media(max-width:767px){.home-hero>img,.home-cta>img,.site-shell .bc-page-hero{animation:none}.bc-motion-reveal{filter:none;transform:translateY(18px)}.bc-motion-card,.bc-motion-card:hover{transform:none}}
+
+/* ---------- Service-request dropdown auto-fill highlight ---------- */
+.bc-field-highlighted {
+    box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.35) !important;
+    border-color: var(--bc-primary) !important;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}

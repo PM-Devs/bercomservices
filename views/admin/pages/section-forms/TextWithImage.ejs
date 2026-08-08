@@ -1,0 +1,92 @@
+<% var d = section.data || {}; var img = d.image || {}; var fc = d.featureCards || []; var mv = (d.missionVisionBox && d.missionVisionBox.items) || []; var cta = d.cta || {}; var ci = d.centeredIntro || {}; %>
+<%- include('_top', { page, section }) %>
+
+<p class="small text-secondary">Optional centered heading shown above the image+text row (e.g. "No shortcuts. Just expert work you can count on."). Leave the title blank to skip it.</p>
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Centered Intro Label</label><input type="text" name="ciLabel" class="form-control" value="<%= ci.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Centered Intro Title</label><input type="text" name="ciTitle" class="form-control" value="<%= ci.title %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Centered Intro Text</label><input type="text" name="ciText" class="form-control" value="<%= ci.text %>"></div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-6"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-12"><label class="form-label small fw-medium">Paragraphs (one per line)</label><textarea name="paragraphsLines" class="form-control" rows="4"><%= (d.paragraphs || []).join('\n') %></textarea></div>
+    <div class="col-md-3">
+        <label class="form-label small fw-medium">Main Image</label>
+        <div class="input-group">
+            <input type="text" name="imageMain" class="form-control" value="<%= img.main %>" placeholder="/uploads/filename.jpg">
+            <a href="/admin/media" target="_blank" class="btn btn-outline-secondary">Browse</a>
+        </div>
+        <% if (img.main) { %><img src="<%= img.main %>" class="mt-2" style="height:50px;border-radius:6px;"><% } %>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label small fw-medium">Thumb Image (optional)</label>
+        <div class="input-group">
+            <input type="text" name="imageThumb" class="form-control" value="<%= img.thumb %>" placeholder="/uploads/filename.jpg">
+            <a href="/admin/media" target="_blank" class="btn btn-outline-secondary">Browse</a>
+        </div>
+        <% if (img.thumb) { %><img src="<%= img.thumb %>" class="mt-2" style="height:50px;border-radius:6px;"><% } %>
+    </div>
+    <div class="col-md-3"><label class="form-label small fw-medium">Badge Year</label><input type="text" name="imageBadgeYear" class="form-control" value="<%= img.badgeYear %>"></div>
+    <div class="col-md-3"><label class="form-label small fw-medium">Badge Caption</label><input type="text" name="imageBadgeCaption" class="form-control" value="<%= img.badgeCaption %>"></div>
+    <div class="col-md-6"><label class="form-label small fw-medium">Section Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light Gray</option>
+        </select>
+    </div>
+    <div class="col-md-3"><label class="form-label small fw-medium">CTA Label</label><input type="text" name="ctaLabel" class="form-control" value="<%= cta.label %>"></div>
+    <div class="col-md-3"><label class="form-label small fw-medium">CTA Href</label><input type="text" name="ctaHref" class="form-control" value="<%= cta.href %>"></div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Feature Cards</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="fc-repeater">Add Card</button>
+</div>
+<div id="fc-repeater" class="mb-3">
+    <template>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-3"><label class="form-label small">Icon</label><input type="text" name="fcIcon" class="form-control form-control-sm"></div>
+            <div class="col-md-3"><label class="form-label small">Title</label><input type="text" name="fcTitle" class="form-control form-control-sm"></div>
+            <div class="col-md-6"><label class="form-label small">Text</label><input type="text" name="fcText" class="form-control form-control-sm"></div>
+        </div>
+    </template>
+    <% fc.forEach(function (card) { %>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-3"><label class="form-label small">Icon</label><input type="text" name="fcIcon" class="form-control form-control-sm" value="<%= card.icon %>"></div>
+            <div class="col-md-3"><label class="form-label small">Title</label><input type="text" name="fcTitle" class="form-control form-control-sm" value="<%= card.title %>"></div>
+            <div class="col-md-6"><label class="form-label small">Text</label><input type="text" name="fcText" class="form-control form-control-sm" value="<%= card.text %>"></div>
+        </div>
+    <% }); %>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Mission / Vision Boxes (optional)</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="mv-repeater">Add Box</button>
+</div>
+<div id="mv-repeater">
+    <template>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-4"><label class="form-label small">Label</label><input type="text" name="mvLabel" class="form-control form-control-sm"></div>
+            <div class="col-md-8"><label class="form-label small">Text</label><input type="text" name="mvText" class="form-control form-control-sm"></div>
+        </div>
+    </template>
+    <% mv.forEach(function (item) { %>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-4"><label class="form-label small">Label</label><input type="text" name="mvLabel" class="form-control form-control-sm" value="<%= item.label %>"></div>
+            <div class="col-md-8"><label class="form-label small">Text</label><input type="text" name="mvText" class="form-control form-control-sm" value="<%= item.text %>"></div>
+        </div>
+    <% }); %>
+</div>
+
+<div class="mb-3">
+    <label class="form-label small fw-medium">Checklist (optional, one item per line — renders as a clean 2-column checklist)</label>
+    <textarea name="checklistLines" class="form-control" rows="4"><%= (d.checklist || []).join('\n') %></textarea>
+</div>
+
+<%- include('_bottom', { page, section }) %>

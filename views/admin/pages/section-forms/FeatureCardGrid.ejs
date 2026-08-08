@@ -1,0 +1,59 @@
+<% var d = section.data || {}; var cards = d.cards || []; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-2"><label class="form-label small fw-medium">Columns</label><input type="number" name="columns" class="form-control" value="<%= d.columns || 4 %>"></div>
+    <div class="col-md-2"><label class="form-label small fw-medium">Background</label>
+        <select name="sectionBg" class="form-select">
+            <option value="bc-section-light" <%= d.sectionBg === 'bc-section-light' ? 'selected' : '' %>>Light</option>
+            <option value="bc-section-white" <%= d.sectionBg === 'bc-section-white' ? 'selected' : '' %>>White</option>
+        </select>
+    </div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+</div>
+
+<p class="small text-secondary">Add a photo to a card to show it as a photo card (icon becomes a small badge). Leave photo blank to keep the plain icon card style.</p>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Cards</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="cards-repeater">Add Card</button>
+</div>
+<div id="cards-repeater">
+    <template>
+        <div class="repeater-item">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="row g-2">
+                <div class="col-md-3"><label class="form-label small">Icon</label><input type="text" name="cardIcon" class="form-control form-control-sm"></div>
+                <div class="col-md-3"><label class="form-label small">Title</label><input type="text" name="cardTitle" class="form-control form-control-sm"></div>
+                <div class="col-md-6"><label class="form-label small">Text</label><input type="text" name="cardText" class="form-control form-control-sm"></div>
+                <div class="col-12">
+                    <label class="form-label small">Photo (optional)</label>
+                    <div class="input-group">
+                        <input type="text" name="cardPhoto" class="form-control form-control-sm" placeholder="/uploads/filename.jpg">
+                        <a href="/admin/media" target="_blank" class="btn btn-outline-secondary btn-sm">Browse</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <% cards.forEach(function (card) { %>
+        <div class="repeater-item">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="row g-2">
+                <div class="col-md-3"><label class="form-label small">Icon</label><input type="text" name="cardIcon" class="form-control form-control-sm" value="<%= card.icon %>"></div>
+                <div class="col-md-3"><label class="form-label small">Title</label><input type="text" name="cardTitle" class="form-control form-control-sm" value="<%= card.title %>"></div>
+                <div class="col-md-6"><label class="form-label small">Text</label><input type="text" name="cardText" class="form-control form-control-sm" value="<%= card.text %>"></div>
+                <div class="col-12">
+                    <label class="form-label small">Photo (optional)</label>
+                    <div class="input-group">
+                        <input type="text" name="cardPhoto" class="form-control form-control-sm" value="<%= card.photo %>" placeholder="/uploads/filename.jpg">
+                        <a href="/admin/media" target="_blank" class="btn btn-outline-secondary btn-sm">Browse</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<%- include('_bottom', { page, section }) %>

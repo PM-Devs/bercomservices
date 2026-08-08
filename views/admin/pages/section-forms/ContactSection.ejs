@@ -1,0 +1,104 @@
+<% var d = section.data || {}; var bh = d.businessHours || {}; var rows = bh.rows || []; var fields = d.formFields || []; %>
+<%- include('_top', { page, section }) %>
+
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><label class="form-label small fw-medium">Label</label><input type="text" name="label" class="form-control" value="<%= d.label %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Title</label><input type="text" name="title" class="form-control" value="<%= d.title %>"></div>
+    <div class="col-md-4"><label class="form-label small fw-medium">Submit Button Label</label><input type="text" name="submitLabel" class="form-control" value="<%= d.submitLabel || 'Send Message' %>"></div>
+    <div class="col-12"><label class="form-label small fw-medium">Intro</label><textarea name="intro" class="form-control" rows="2"><%= d.intro %></textarea></div>
+</div>
+
+<div class="row g-2 mb-3">
+    <div class="col-6 col-md-2"><div class="form-check"><input type="checkbox" name="showMiniCards" class="form-check-input" id="showMiniCards" <%= d.showMiniCards ? 'checked' : '' %>><label class="form-check-label small" for="showMiniCards">Mini Cards</label></div></div>
+    <div class="col-6 col-md-2"><div class="form-check"><input type="checkbox" name="showForm" class="form-check-input" id="showForm" <%= d.showForm !== false ? 'checked' : '' %>><label class="form-check-label small" for="showForm">Contact Form</label></div></div>
+    <div class="col-6 col-md-2"><div class="form-check"><input type="checkbox" name="showDetailsCard" class="form-check-input" id="showDetailsCard" <%= d.showDetailsCard !== false ? 'checked' : '' %>><label class="form-check-label small" for="showDetailsCard">Details Card</label></div></div>
+    <div class="col-6 col-md-2"><div class="form-check"><input type="checkbox" name="showBusinessHours" class="form-check-input" id="showBusinessHours" <%= d.showBusinessHours ? 'checked' : '' %>><label class="form-check-label small" for="showBusinessHours">Business Hours</label></div></div>
+    <div class="col-6 col-md-2"><div class="form-check"><input type="checkbox" name="showMapPlaceholder" class="form-check-input" id="showMapPlaceholder" <%= d.showMapPlaceholder ? 'checked' : '' %>><label class="form-check-label small" for="showMapPlaceholder">Map Block</label></div></div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label small fw-medium">Map Section Heading</label>
+    <input type="text" name="mapHeading" class="form-control" value="<%= d.mapHeading %>">
+</div>
+
+<h6 class="fw-bold small text-uppercase text-secondary">Business Hours</h6>
+<div class="mb-2">
+    <label class="form-label small">Note (shown below the hours table)</label>
+    <input type="text" name="businessHoursNote" class="form-control" value="<%= bh.note %>">
+</div>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Hours Rows</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="bh-repeater">Add Row</button>
+</div>
+<div id="bh-repeater" class="mb-3">
+    <template>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-6"><label class="form-label small">Day(s)</label><input type="text" name="bhDay" class="form-control form-control-sm"></div>
+            <div class="col-md-6"><label class="form-label small">Hours</label><input type="text" name="bhHours" class="form-control form-control-sm"></div>
+        </div>
+    </template>
+    <% rows.forEach(function (row) { %>
+        <div class="repeater-item row g-2 align-items-end">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="col-md-6"><label class="form-label small">Day(s)</label><input type="text" name="bhDay" class="form-control form-control-sm" value="<%= row.day %>"></div>
+            <div class="col-md-6"><label class="form-label small">Hours</label><input type="text" name="bhHours" class="form-control form-control-sm" value="<%= row.hours %>"></div>
+        </div>
+    <% }); %>
+</div>
+
+<h6 class="fw-bold small text-uppercase text-secondary">Form Fields</h6>
+<p class="small text-secondary">For a "Select" field, enter options as "value|Label" — one per line.</p>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <label class="form-label small fw-medium mb-0">Fields</label>
+    <button type="button" class="btn btn-sm btn-outline-secondary" data-repeater-add="ff-repeater">Add Field</button>
+</div>
+<div id="ff-repeater">
+    <template>
+        <div class="repeater-item">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="row g-2">
+                <div class="col-md-3"><label class="form-label small">Field Name</label><input type="text" name="ffName" class="form-control form-control-sm"></div>
+                <div class="col-md-3"><label class="form-label small">Label</label><input type="text" name="ffLabel" class="form-control form-control-sm"></div>
+                <div class="col-md-2">
+                    <label class="form-label small">Type</label>
+                    <select name="ffType" class="form-select form-select-sm">
+                        <option value="text">Text</option><option value="email">Email</option><option value="tel">Phone</option>
+                        <option value="textarea">Textarea</option><option value="select">Select</option>
+                    </select>
+                </div>
+                <div class="col-md-2"><label class="form-label small">Placeholder</label><input type="text" name="ffPlaceholder" class="form-control form-control-sm"></div>
+                <div class="col-md-2 d-flex gap-2 align-items-end">
+                    <div class="form-check"><input type="checkbox" name="ffRequired" class="form-check-input"><label class="form-check-label small">Required</label></div>
+                    <div class="form-check"><input type="checkbox" name="ffHalf" class="form-check-input"><label class="form-check-label small">Half-width</label></div>
+                </div>
+                <div class="col-12"><label class="form-label small">Select Options (value|Label per line)</label><textarea name="ffOptionsLines" class="form-control form-control-sm" rows="2"></textarea></div>
+            </div>
+        </div>
+    </template>
+    <% fields.forEach(function (f) { %>
+        <div class="repeater-item">
+            <button type="button" class="btn btn-sm btn-outline-danger repeater-remove"><i class="material-icons-round" style="font-size:1rem;">close</i></button>
+            <div class="row g-2">
+                <div class="col-md-3"><label class="form-label small">Field Name</label><input type="text" name="ffName" class="form-control form-control-sm" value="<%= f.name %>"></div>
+                <div class="col-md-3"><label class="form-label small">Label</label><input type="text" name="ffLabel" class="form-control form-control-sm" value="<%= f.label %>"></div>
+                <div class="col-md-2">
+                    <label class="form-label small">Type</label>
+                    <select name="ffType" class="form-select form-select-sm">
+                        <% ['text','email','tel','textarea','select'].forEach(function (t) { %>
+                            <option value="<%= t %>" <%= f.type === t ? 'selected' : '' %>><%= t %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="col-md-2"><label class="form-label small">Placeholder</label><input type="text" name="ffPlaceholder" class="form-control form-control-sm" value="<%= f.placeholder %>"></div>
+                <div class="col-md-2 d-flex gap-2 align-items-end">
+                    <div class="form-check"><input type="checkbox" name="ffRequired" class="form-check-input" <%= f.required ? 'checked' : '' %>><label class="form-check-label small">Required</label></div>
+                    <div class="form-check"><input type="checkbox" name="ffHalf" class="form-check-input" <%= f.half ? 'checked' : '' %>><label class="form-check-label small">Half-width</label></div>
+                </div>
+                <div class="col-12"><label class="form-label small">Select Options (value|Label per line)</label><textarea name="ffOptionsLines" class="form-control form-control-sm" rows="2"><%= (f.options || []).map(o => o.value + '|' + o.label).join('\n') %></textarea></div>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<%- include('_bottom', { page, section }) %>
