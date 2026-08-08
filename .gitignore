@@ -9,3 +9,6 @@ uploads/*
 Thumbs.db
 
 img/Thumbs.db
+
+.vercel
+.env*
